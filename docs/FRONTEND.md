@@ -110,7 +110,7 @@ app screens may use 1px borders and row rules (§13 of the app chapter).
 | App KPI / card title / body / label | 24 / 16 / 14 / 12–13px |
 
 ### Spacing
-4px base. Pages: margin clamp(16px, 2.2vw, 32px), 12-column grid, section gaps 160px desktop and 88px phone (a change
+4px base. Pages: margin clamp(16px, 2.2vw, 32px), 12-column grid, section gaps up to 120px each side on desktop and 72px on a phone (a change
 of field colour lets them close up). App: one gutter of 16px, card padding 20px, canvas column 1152px, title 32px
 below the bar, controls 36px, inputs 40px, table rows 44px.
 
@@ -150,19 +150,19 @@ primary button **Copy link**.
 
 **Grid** (12 columns, 16px gutter, 12 × 80 + 11 × 16 = 1136 + 16px of side air in a 1152 column, written in the CSS):
 
-- **Position card** (columns 1–7): groups "Position" (margin mode, side, size, entry price, mark price), "Margin"
+- **Position card** (columns 1–7; built after review: each other position prints its own working, UPNL and MM with the inputs substituted, directly under its fields): groups "Position" (margin mode, side, size, entry price, mark price), "Margin"
   (wallet balance, maintenance margin rate %, maintenance amount) and "Other cross positions". Other positions are a
   real table: Side, Size, Entry, Mark, Rate %, Amount, then the computed UPNL and MM, and a remove action; "Add
   position" under it; a switch to enter TMM1 and UPNL1 as totals. Isolated mode: "Isolated margin ignores other
   positions. Switch to cross to add them."
-- **Answer card** (columns 8–12, sticky): "Liquidation price", the figure in Bodoni at 36px with "USDT" in grey; the
+- **Answer card** (columns 8–12, first in the right column; not sticky, because the working sits under it): "Liquidation price", the figure in Bodoni at 36px with "USDT" in grey; the
   **price strip** (the screen's own element): one axis with the mark price (ink dot), the entry (hollow ink tick), the
   liquidation price (the gold mark, joined to the mark price by the gold distance bar) and, when other positions
   exist, the liquidation price of this position alone (hollow grey tick, labelled "Alone"). Under it, two figures at
   24px: Maintenance margin, and Distance from mark with its percent and direction.
-- **Breakdown card** (columns 1–12): "How this number is built". A table: Step, Formula, With your inputs, Value.
-  Rows: each other position's UPNL and MM, TMM1, UPNL1, Numerator, Denominator, Liquidation price, Maintenance margin.
-  Terms link to `/sources#var-…`. Footer: "Formula source: Binance FAQ".
+- **Breakdown card** (columns 8–12, under the answer, so the working updates beside the inputs): "How this number is
+  built". The two formulas once, with every term linking to `/sources#var-…`, then two-line rows (step and value, then
+  the substitution): TMM1, UPNL1, Numerator, Denominator, Liquidation price, Maintenance margin. Link: "Binance FAQ".
 
 **States:** empty ("Enter a position, or load one of Binance's examples."), partial (maintenance margin shown; the
 price says what is missing: "Add entry price and wallet balance to get a liquidation price."), invalid ("Fix the
@@ -178,11 +178,11 @@ then the position card, then the breakdown as two-line rows; the other-positions
 
 ### 3.2 `/proof` (app screen)
 
-Same bar. h1 "Proof". Subline: "Commit {short} {env}. Checked {time} UTC." Primary: **Open the check** (when a check
-link exists).
+Same bar. h1 "Proof". Subline: "Commit {short} {env}."
 
-- **Status card** (columns 1–5): "TestSprite check", the result in Bodoni at 36px with its glyph (passed in
-  `--positive`, failed in `--negative`, others in grey), one sentence on what it means.
+- **Status card** (columns 1–5): "TestSprite check", a short result word in Bodoni at 36px with its glyph (Passed,
+  Failed, Running, No check yet, Unknown, Local build), one sentence on what it means, when it was checked, and the
+  action pinned at its foot: **Open the check** (or "How the gate works" when no check exists).
 - **Build card** (columns 6–12): key-value rows: Commit (full SHA, monospace as an ID), Environment, Pull request,
   Branch, Checked at.
 - **Golden suite** (columns 1–12): the 16 cases as a table: ID, Case, What it checks, Kind (Published, Derived,
@@ -204,7 +204,8 @@ Corner navigation: "Lydit" top-left; top-right "Sources", the proof line, and th
 2. **Same account, two answers** (paper). Paragraph: "Binance's Example 2 is one cross wallet holding an ETH long and
    a BTC long. The BTC position's loss and margin eat into the shared balance, so the ETH long liquidates sooner. A
    calculator that reads one position at a time misses it." Two specimen figures, computed live: "ETH long, as Binance
-   computes it" and "ETH long, read alone". The live thing: a BTC mark-price slider with its value and "Reset to
+   computes it" and "ETH long, read alone", captioned under the figures (captions above read as labels), cut only
+   below the comma's tail so every character reads. The live thing: a BTC mark-price slider with its value and "Reset to
    Binance's 31,967.27"; a line "Reading the ETH long alone shows {gap} USDT more room than the account has." Rate and
    maintenance amount stay at Example 2's values.
 3. **From pull request to merge** (pale stone), a call-and-response column:
@@ -217,13 +218,14 @@ Corner navigation: "Lydit" top-left; top-right "Sources", the proof line, and th
      the answer card with Binance's number and the proof line reading "passed".
 4. **The touchstone** (full-bleed photograph, the page's one rest): two touchstones, the left one streaked with gold.
    Caption: "Two touchstones. The streaks on the left are gold."
-5. **Held out** (gold field), one sentence at statement size: "**Held out of every pull request:** Example 1's
-   maintenance margin, ETHUSDT's liquidation price, its maintenance margin, BTCUSDT's liquidation price and its
-   maintenance margin." One answer lit at a time.
+5. **Held out** (gold field), one sentence at statement size (36px, 30px tablet, 21px phone): "**Held out of every
+   pull request:** Example 1's margin, ETHUSDT's liquidation price and margin and BTCUSDT's liquidation price and
+   margin." One answer lit at a time.
 6. **Check it yourself** (stone field), a table at one type size: what, where, what you will see, link. Rows:
    Binance's FAQ; the ETH scenario on Lydit; the demo pull request; the TestSprite suite; the source; this build's
    check. Links that do not exist yet read "Linked once it is public."
-7. **Why Lydit** (paper), two columns with highlighted words: "Lydit takes its name from lydite, the black stone of
+7. **Why Lydit** (paper), two paragraphs side by side at body size with gold highlights; the last sentence, on stone,
+   links to `/proof`: "Lydit takes its name from lydite, the black stone of
    ancient Lydia that assayers called the touchstone. Around 560 BCE, under Croesus, Lydia struck some of the first
    coins of pure gold, and the stone was how a buyer told gold from a good imitation. The metal was drawn across the
    stone and its streak laid beside streaks from reference needles of known purity, so the sample was never judged
@@ -256,9 +258,11 @@ Corner navigation: "Lydit" top-left; top-right "Sources", the proof line, and th
 
 ### 3.5 404 and error (pages)
 
-Two fields, as the hero. 404: "NO PAGE / HERE", sentence "The calculator is at the root.", action Open the
-calculator. Error: "THIS PAGE / BROKE", sentence "Lydit shows nothing rather than a wrong number.", actions Try again
-and Open the calculator.
+Two fields, as the hero. 404: "NO PAGE / HERE", sentence "Nothing lives at this address. The calculator is at the
+root.", action Open the calculator. Error: "THIS PAGE / BROKE", sentence "Lydit shows nothing rather than a wrong
+number. Try again, or start over from the calculator.", actions Try again and Open the calculator. Both continue with
+**Where to go**: four tiles of unequal width, each shown by something real (the calculator's live answer fragment, the
+touchstone, the woodcut, the stater), then the footer with credits.
 
 ## 4. Components
 
