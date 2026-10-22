@@ -115,17 +115,17 @@ of field colour lets them close up). App: one gutter of 16px, card padding 20px,
 below the bar, controls 36px, inputs 40px, table rows 44px.
 
 ### Shape
-App: tight radii, cards 8px, controls 6px, chips 4px. Pages: square corners on pictures and fields; buttons square.
+App: tight radii, cards 8px, controls 6px, chips 4px. Pages: square corners on fields and buttons.
 
 ### Motion
 - **Pages:** colour by chapter is the signature (each chapter a full-bleed field; the fixed corner navigation takes the
   ink of the field beneath it, 300ms). The hero's two lines rise from their masks on load (900ms, expo out, 110ms
   stagger), settled by 1.2s. Each section's parts enter once in reading order (heading, text, figure; 70ms apart,
-  rising 24px). The held-out answers light one at a time (2s each, 400ms colour change). The touchstone photograph
-  drifts from 1.08 to 1.0 scale with the scroll. Press and hover feedback on every control.
+  rising 24px). The held-out answers light one at a time (2s each, 400ms colour change). Press and hover feedback on
+  every control.
 - **App screens:** no entrances. Feedback only: press (140ms), hover (180ms), the copy button's "Copied". Numbers never
   animate: TestSprite reads the DOM, and an in-flight number is a wrong number.
-- `prefers-reduced-motion: reduce` shows the finished page: no travel, no cycling, no drift.
+- `prefers-reduced-motion: reduce` shows the finished page: no travel, no cycling.
 
 ## 3. Screens and sections, in build order
 
@@ -216,15 +216,13 @@ Corner navigation: "Lydit" top-left; top-right "Sources", the proof line, and th
      the merge is blocked. The report names the case and gives a fix prompt."
    - "Then the fix goes green, and only then can it merge." Call: `fix: restore other-position terms`. Response, wide:
      the answer card with Binance's number and the proof line reading "passed".
-4. **The touchstone** (full-bleed photograph, the page's one rest): two touchstones, the left one streaked with gold.
-   Caption: "Two touchstones. The streaks on the left are gold."
-5. **Held out** (gold field), one sentence at statement size (36px, 30px tablet, 21px phone): "**Held out of every
+4. **Held out** (gold field), one sentence at statement size (36px, 30px tablet, 21px phone): "**Held out of every
    pull request:** Example 1's margin, ETHUSDT's liquidation price and margin and BTCUSDT's liquidation price and
    margin." One answer lit at a time.
-6. **Check it yourself** (stone field), a table at one type size: what, where, what you will see, link. Rows:
+5. **Check it yourself** (stone field), a table at one type size: what, where, what you will see, link. Rows:
    Binance's FAQ; the ETH scenario on Lydit; the demo pull request; the TestSprite suite; the source; this build's
    check. Links that do not exist yet read "Linked once it is public."
-7. **Why Lydit** (paper), two paragraphs side by side at body size with gold highlights; the last sentence, on stone,
+6. **Why Lydit** (paper), two paragraphs side by side at body size with gold highlights; the last sentence, on stone,
    links to `/proof`: "Lydit takes its name from lydite, the black stone of
    ancient Lydia that assayers called the touchstone. Around 560 BCE, under Croesus, Lydia struck some of the first
    coins of pure gold, and the stone was how a buyer told gold from a good imitation. The metal was drawn across the
@@ -232,10 +230,11 @@ Corner navigation: "Lydit" top-left; top-right "Sources", the proof line, and th
    against itself. Lydit works the same way. Binance's published examples are the needles. Every release is drawn
    against them on its pull request preview, and the needles sit where the pull request cannot reach. A number that
    does not match does not merge."
-8. **Gold, and gold-coloured** (pale stone): the Croesid gold stater (Lydia, ca. 560–546 BCE) beside a fourrée stater
-   (Kyzikos, ca. 600–500 BC: a gold skin over a base-metal core), equal size, captions from the Met.
-9. **Footer** (stone): "LYDIT" at full width; Open the calculator, See the proof, Read the sources at 32px in gold;
-   small links (Binance FAQ, Source on GitHub, the demo PR); the picture credits; "A calculator, not advice. Binance's
+7. **Gold, and gold-coloured** (pale stone): heading and text on the left; on the right, the three coins as a list,
+   name in Bodoni beside its place and date: Gold stater (Lydia, ca. 560–546 BCE), Gold stater (Lydia, ca. 560–546
+   BCE), Fourrée stater (Kyzikos, ca. 600–500 BC: gold over base metal).
+8. **Footer** (stone): "LYDIT" at full width; Open the calculator, See the proof, Read the sources at 32px in gold;
+   small links (Binance FAQ, Source on GitHub, the demo PR); "A calculator, not advice. Binance's
    engine has the final word."
 
 ### 3.4 `/sources` (page)
@@ -247,22 +246,21 @@ Corner navigation: "Lydit" top-left; top-right "Sources", the proof line, and th
    liquidation formula on Binance's ETH example, computed by this build.
 3. **Every variable** (paper): a table at one size: term, what it is, where it comes from. Each row is an anchor
    (`#var-wb` …) that the calculator's breakdown links to, and lights when targeted.
-4. **The assay office** (full-bleed photograph): "Weighing gold bars at the New York assay office, 1917."
-5. **Scenario links** (pale stone). The live thing: "Paste a scenario link". The ETH example is prefilled; under it,
+4. **Scenario links** (pale stone). The live thing: "Paste a scenario link". The ETH example is prefilled; under it,
    every parameter the link carries, as a table that updates as you type, and a button to open it in the calculator.
    Then the parameter reference in three groups (Position, Margin, Other positions).
-6. **Not covered** (paper), split: "Hedge mode, portfolio margin, fees, funding and other venues. Hyperliquid
-   publishes formulas but no worked numbers, so there is nothing to hold it to yet." On the right, Agricola's woodcut
-   (De re metallica, 1556, Book X: parting gold from silver), multiplied onto the pale field.
-7. **Footer** as on `/how-it-works`.
+5. **Not covered** (paper), split: heading and the reason on the left ("Hyperliquid publishes its formulas but no
+   worked numbers, so there is nothing yet to hold a release to."); on the right, the list set large: Hedge mode,
+   Portfolio margin, Fees and funding, Other venues.
+6. **Footer** as on `/how-it-works`.
 
 ### 3.5 404 and error (pages)
 
 Two fields, as the hero. 404: "NO PAGE / HERE", sentence "Nothing lives at this address. The calculator is at the
 root.", action Open the calculator. Error: "THIS PAGE / BROKE", sentence "Lydit shows nothing rather than a wrong
 number. Try again, or start over from the calculator.", actions Try again and Open the calculator. Both continue with
-**Where to go**: four tiles of unequal width, each shown by something real (the calculator's live answer fragment, the
-touchstone, the woodcut, the stater), then the footer with credits.
+**Where to go**: an index of the four destinations, one row each, the name in Bodoni on the left and its sentence on
+the right (the calculator row quotes Binance's ETH example as this build computes it), then the footer.
 
 ## 4. Components
 
@@ -283,8 +281,7 @@ touchstone, the woodcut, the stater), then the footer with credits.
 | Statement (held out) | 36px, three lines | 24px, four lines |
 | Line-up table | Four columns at one size | Two-line entries |
 | Two-column story | `columns: 2`, highlighted words | One column |
-| Picture band | Full-bleed, caption under | Full width, cropped to 4:5 |
-| Footer | Wordmark full width, places, links, credits | Stacked |
+| Footer | Wordmark full width, places, links | Stacked |
 
 ## 5. Avoid
 
@@ -298,4 +295,5 @@ touchstone, the woodcut, the stater), then the footer with credits.
 - Fake GitHub or TestSprite screens; invented customers, quotes or statistics.
 - Any expected liquidation price or maintenance margin in source, copy or fixtures (PRD §7). Every number shown comes
   from the engine at render time.
-- Found pictures presented as Lydit's own. Every one is credited in the footer.
+- Photographs, archival pictures and illustrations: the site carries none, by the owner's decision. Its visuals are
+  type, colour fields and real interface fragments computed by the engine.
