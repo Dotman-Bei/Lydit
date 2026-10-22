@@ -157,7 +157,17 @@ export function calculate(s: Scenario, touched: ReadonlySet<string> = new Set())
     return { ...base, status: "partial", mm };
   }
 
-  const liq = liquidationPrice({ mode: s.mode, side: s.side, size, ep, wb, mmr, cum, tmm: others.tmm, upnl: others.upnl });
+  const liq = liquidationPrice({
+    mode: s.mode,
+    side: s.side,
+    size,
+    ep,
+    wb,
+    mmr,
+    cum,
+    tmm: others.tmm,
+    upnl: others.upnl,
+  });
   const distance = liq.kind === "price" && mp ? distanceFromMark(s.side, liq.price, mp) : undefined;
   return { ...base, status: "ready", mm, liq, distance };
 }
