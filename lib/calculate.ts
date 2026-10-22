@@ -89,6 +89,8 @@ export interface Calculation {
   incompleteOthers: number[];
   mm?: Dec;
   liq?: LiquidationResult;
+  /** The same position read alone (no other cross positions), when others were entered. */
+  alone?: LiquidationResult;
   distance?: Distance;
   others: OthersSummary;
   /** The values the engine used, for the breakdown. */
@@ -169,5 +171,23 @@ export function calculate(s: Scenario, touched: ReadonlySet<string> = new Set())
     upnl: others.upnl,
   });
   const distance = liq.kind === "price" && mp ? distanceFromMark(s.side, liq.price, mp) : undefined;
-  return { ...base, status: "ready", mm, liq, distance };
+  const hasOthers = s.mode === "cross" && (!others.tmm.isZero() || !others.upnl.isZero());
+  const alone = hasOthers
+    ? liquidationPrice({ mode: s.mode, side: s.side, size, ep, wb, mmr, cum, tmm: new D(0), upnl: new D(0) })
+    : undefined;
+  return { ...base, status: "ready", mm, liq, alone, distance };
+}
+
+/**
+ * How far other cross positions move liquidation, from the two prices as displayed (2 decimals),
+ * so the figure matches what a reader subtracts by hand. Positive: closer to mark.
+ */
+export function othersShift(calc: Calculation): { amount: Dec; closer: boolean } | undefined {
+  if (calc.liq?.kind !== "price" || calc.alone?.kind !== "price" || !calc.values.mp) return undefined;
+  const mark = calc.values.mp;
+  const shown = calc.liq.price.toDecimalPlaces(2);
+  const shownAlone = calc.alone.price.toDecimalPlaces(2);
+  const gap = mark.minus(shownAlone).abs().minus(mark.minus(shown).abs());
+  if (gap.isZero()) return undefined;
+  return { amount: gap.abs(), closer: gap.greaterThan(0) };
 }

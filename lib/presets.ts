@@ -14,6 +14,8 @@ const CROSS_WALLET = "1535443.01";
 export interface Preset {
   id: "eth-cross" | "btc-cross" | "mm-example-1";
   label: string;
+  /** Button label in the calculator's examples control. */
+  short: string;
   description: string;
   scenario: Scenario;
 }
@@ -22,6 +24,7 @@ export const PRESETS: Preset[] = [
   {
     id: "eth-cross",
     label: "ETH long, cross",
+    short: "ETH long",
     description: "Example 2, ETHUSDT, with the account's BTC position as the other cross position.",
     scenario: {
       ...emptyScenario(),
@@ -33,6 +36,7 @@ export const PRESETS: Preset[] = [
   {
     id: "btc-cross",
     label: "BTC long, cross",
+    short: "BTC long",
     description: "Example 2, BTCUSDT, with the account's ETH position as the other cross position.",
     scenario: {
       ...emptyScenario(),
@@ -44,6 +48,7 @@ export const PRESETS: Preset[] = [
   {
     id: "mm-example-1",
     label: "Maintenance margin only",
+    short: "Example 1",
     description: "Example 1, BTCUSDT: size, mark price, rate and maintenance amount.",
     scenario: {
       ...emptyScenario(),
