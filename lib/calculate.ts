@@ -110,8 +110,8 @@ export function calculate(s: Scenario, touched: ReadonlySet<string> = new Set())
   let others: OthersSummary = { source: "none", rows: [], tmm: new D(0), upnl: new D(0) };
 
   if (cross && s.otherInput === "totals") {
-    const tmm = check(s.tmm, "nonNegative", false, "71200.81");
-    const upnl = check(s.upnl, "any", false, "-56354.57");
+    const tmm = check(s.tmm, "nonNegative", false, "1250.5");
+    const upnl = check(s.upnl, "any", false, "-420.75");
     if (tmm.error) errors.tmm = tmm.error;
     if (upnl.error) errors.upnl = upnl.error;
     others = { source: "totals", rows: [], tmm: tmm.value ?? new D(0), upnl: upnl.value ?? new D(0) };
