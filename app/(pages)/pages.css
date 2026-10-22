@@ -195,6 +195,24 @@
   line-height: 1.45;
   text-align: center;
 }
+.hero__sub p {
+  max-width: none;
+}
+.hero__actions {
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+.hero__link {
+  color: var(--field-stone-ink);
+  font-size: var(--step-small);
+  font-weight: 500;
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+}
 .lines .line {
   display: block;
   overflow: hidden;
@@ -375,7 +393,8 @@
 .calls__aside {
   font-size: var(--step-body);
 }
-[data-ui].fragment {
+[data-ui].fragment,
+[data-ui] .fragment {
   display: grid;
   gap: 4px;
   max-width: 300px;
@@ -917,6 +936,74 @@
   font-size: var(--step-small);
 }
 
+/* ---------- where to go (404 and error) ---------- */
+.site-index {
+  background: var(--field-pale);
+  color: var(--field-pale-ink);
+}
+.site-index .section-heading {
+  margin-bottom: 40px;
+}
+.site-index__grid {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: 48px var(--gutter);
+}
+.tile {
+  grid-column: span 5;
+  display: grid;
+  gap: 8px;
+  align-content: start;
+  text-decoration: none;
+}
+.tile--wide {
+  grid-column: span 7;
+}
+.tile__picture {
+  display: block;
+  height: clamp(200px, 22vw, 340px);
+  overflow: clip;
+  background: var(--field-stone);
+  margin-bottom: 8px;
+}
+.tile__picture img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 600ms var(--ease-soft);
+}
+.tile__picture--paper {
+  background: var(--field-pale);
+}
+.tile__picture--paper img {
+  object-position: 50% 25%;
+  mix-blend-mode: multiply;
+}
+.tile__picture--ui {
+  display: grid;
+  place-items: center;
+  background: var(--surface);
+}
+.tile:hover .tile__picture img {
+  transform: scale(1.03);
+}
+.tile__title {
+  font-family: var(--font-display);
+  font-size: 36px;
+  line-height: 1.1;
+  text-decoration: underline;
+  text-decoration-color: transparent;
+  text-underline-offset: 0.15em;
+  text-decoration-thickness: 0.05em;
+  transition: text-decoration-color var(--t-hover) ease;
+}
+.tile:hover .tile__title {
+  text-decoration-color: currentColor;
+}
+.tile__text {
+  font-size: var(--step-body);
+}
+
 /* ---------- footer: name first ---------- */
 .page-footer {
   background: var(--field-stone);
@@ -974,7 +1061,7 @@
   text-decoration-thickness: 0.07em;
 }
 .credits {
-  font-size: var(--step-small);
+  font-size: var(--step-body);
   line-height: 1.55;
 }
 .page-footer__legal {
@@ -1036,6 +1123,10 @@
 
 /* ---------- tablet and phone ---------- */
 @media (max-width: 1023px) {
+  .tile,
+  .tile--wide {
+    grid-column: 1 / -1;
+  }
   .formula__body,
   .formula__frac {
     font-size: 30px;

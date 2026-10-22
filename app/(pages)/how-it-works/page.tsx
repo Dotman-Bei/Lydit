@@ -5,6 +5,7 @@ import Link from "next/link";
 import { HeldOut } from "@/components/how/held-out";
 import { TwoAnswers } from "@/components/how/two-answers";
 import { PageFooter } from "@/components/pages/page-footer";
+import { TwoFieldHero } from "@/components/pages/two-field-hero";
 import { calculate } from "@/lib/calculate";
 import { formatFixed } from "@/lib/format";
 import { BINANCE_FAQ_URL, getPreset } from "@/lib/presets";
@@ -65,38 +66,12 @@ export default function HowItWorksPage() {
   return (
     <main>
       {/* 1. Hero: headline across two fields. Paper above, stone below; the type turns gold on the stone. */}
-      <section className="hero" data-ink="#141414" data-ground="#ffffff" aria-labelledby="hero-title">
-        <h1 id="hero-title" className="hero__title">
-          <span className="hero__copy hero__copy--paper lines">
-            <span className="line">
-              <span data-line style={{ "--i": 0 } as React.CSSProperties}>
-                Held to
-              </span>
-            </span>
-            <span className="line">
-              <span data-line style={{ "--i": 1 } as React.CSSProperties}>
-                the answer
-              </span>
-            </span>
-          </span>
-          <span className="hero__copy hero__copy--stone lines" aria-hidden="true">
-            <span className="line">
-              <span data-line style={{ "--i": 0 } as React.CSSProperties}>
-                Held to
-              </span>
-            </span>
-            <span className="line">
-              <span data-line style={{ "--i": 1 } as React.CSSProperties}>
-                the answer
-              </span>
-            </span>
-          </span>
-        </h1>
-        <p className="hero__sub" data-rise>
+      <TwoFieldHero id="hero-title" lines={["Held to", "the answer"]}>
+        <p>
           A Binance futures liquidation calculator. No release merges unless it reproduces Binance&apos;s own worked
           examples.
         </p>
-      </section>
+      </TwoFieldHero>
 
       {/* 2. Two giant figures compared, with the page's live thing. */}
       <section className="chapter specimens" data-ink="#141414" data-ground="#ffffff" aria-labelledby="two-answers">
