@@ -120,7 +120,7 @@ None. This is a tool; photography would be decoration and every external fetch b
 
 ### 1. `/` Calculator
 
-**Intro** (left-aligned, compact so the form starts above the fold)
+**Intro** (left column, above the form; the result panel starts level with the H1 so the answer is above the fold on desktop)
 - H1: "Liquidation price, held to Binance's own answers"
 - Sub: "Binance USDⓈ-M futures in one-way mode. Every release must reproduce Binance's worked examples before it ships."
 - Preset row, label "Load a Binance FAQ example", buttons:
@@ -190,7 +190,7 @@ Field errors (E-4), below the input in `--fail`, input border turns `--fail`, `a
 - H1: "The check behind this build"
 - Sub: "Which commit is serving you, and whether it passed TestSprite's golden suite."
 - **Status panel** (`--surface`): Commit (full 40-char SHA, mono), Environment, Pull request (when preview), TestSprite check (glyph + state), Checked at (local time), primary button `Open the check` (external). Same states as the proof line. (`proof-page-sha`, `proof-page-status`)
-- **Binance's published examples**: intro "Each case opens the inputs from Binance's FAQ. Open it, then compare with Binance's own page." Larger rows, each with name, what it asserts, and two links `Binance FAQ` and `Open scenario`:
+- **Binance's published examples**: intro "Each case opens the inputs from Binance's FAQ. Open it, then compare with Binance's own page." One row per scenario (not one card per case, which repeated ETH and BTC twice): title, a plain summary of Binance's inputs, the case IDs it checks, and links `Open scenario` and `Binance FAQ`:
   - Build identity tripwire: "Asserts a real commit SHA and the preview environment on PR runs." Link: `Open /api/build`.
   - Maintenance margin, Example 1: "Asserts the maintenance margin."
   - ETHUSDT cross long: "Asserts the liquidation price."
@@ -218,7 +218,7 @@ Field errors (E-4), below the input in `--fail`, input border turns `--fail`, `a
 - H1: "The pull request can't grade itself"
 - Sub: "Each PR preview must reproduce Binance's published answers. Those answers live in TestSprite, out of the PR's reach."
 - CTAs: `Open the demo PR` (primary, external), `See the proof` (secondary, `/proof`).
-- **Same account, two answers** (the live component): "Binance's ETH example shares its cross wallet with a BTC position. Drop that position, as a per-position calculator does, and the price moves." Two figures side by side: "With the BTC position, as Binance computes it" and "ETH position alone". Under them: "The single-position number puts liquidation {Δ} USDT ({pct}%) further away than it is." Caption: "Both numbers are computed live by this build from Binance's inputs." Links: `Open with BTC` / `Open without BTC` (scenario links). All numbers come from the engine at render; none are written in source.
+- **Same account, two answers** (the live component): "Binance's ETH example shares its cross wallet with a BTC position. Drop that position, as a per-position calculator does, and the price moves." Two figures side by side: "With the BTC position, as Binance computes it" and "ETH position alone". Under them: "The single-position number sits {Δ} USDT lower, {pct}% more room than the account has." The gap is computed from the two displayed 2-decimal prices so it matches a reader's own subtraction. Caption: "Both numbers are computed live by this build from Binance's inputs." Links: `Open with BTC` / `Open without BTC` (scenario links). All numbers come from the engine at render; none are written in source.
 - **From pull request to production** (vertical sequence, verb labels, no step numbers):
   - Open a pull request: "A person or a coding agent changes the math. Vercel builds a preview for that PR."
   - TestSprite tests the preview: "The GitHub App waits for the preview, then runs the golden suite against it in a browser."
@@ -249,7 +249,7 @@ Field errors (E-4), below the input in `--fail`, input border turns `--fail`, `a
 | Segmented control | Inline, auto width | Full width, equal halves |
 | Field (label, input, help, error) | Two fields per row inside a group where they pair (Entry/Mark, MMR/Amount) | One per row |
 | Other-position card | Fields in a 3-column grid | Fields one per row; `Remove` in the card header |
-| Result panel | Right column (5/12), `position: sticky; top: 24px` | In flow after the form; mobile result bar points to it |
+| Result panel | Right column (5/12), starts level with the H1, `position: sticky; top: 24px` | In flow after the form; mobile result bar points to it |
 | Mobile result bar | Hidden | Fixed bottom, shown when the panel is off-screen |
 | Breakdown | Expression and result in a grid (label 180px, expression 1fr, result auto) | Stacked: label, expression (wraps at operators), result |
 | Copy link | Button with icon + label | Full width |
