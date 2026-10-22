@@ -12,6 +12,9 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+    // The design skill and its working files are tools, not app code.
+    ".claude/**",
+    ".taste-skill/**",
   ]),
 ]);
 
