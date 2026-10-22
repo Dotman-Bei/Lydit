@@ -1,282 +1,297 @@
 # Lydit frontend spec
 
-Companion to `prd.md`. The PRD says what must exist; this file says how it looks, reads and behaves. Built with the `design-taste-frontend` skill.
+Companion to `prd.md`. The PRD says what must exist; this file says how it looks, reads and behaves. Built with the
+`design-taste-frontend` skill (tasteskill v2): a page direction and an app style dealt by its draw script, adapted to
+Lydit's subject, then checked in a real browser with its inspector.
 
-**Design read:** a single-purpose precision tool plus three explainer pages, for Binance perp traders and hackathon judges, with an assay-ledger language (exact numbers, visible provenance), leaning toward Next.js App Router + Tailwind v4 + Geist / Geist Mono + CSS-only motion.
+## 0. Two kinds of screen
 
-The skill lists dense product UI as out of scope. Its typography, color, copy, layout-discipline and anti-slop rules apply to the whole site. The calculator form follows plain form patterns (label above, error below, no placeholder-as-label) instead of landing-page composition.
+Lydit has two kinds of screen, built with one palette and one pair of typefaces.
 
-**Dials:** `DESIGN_VARIANCE 4` (a tool people read numbers from; offset, not artsy), `MOTION_INTENSITY 3` (motion only as feedback; numbers must never animate because TestSprite reads them), `VISUAL_DENSITY 6` (a working instrument, not a gallery).
+| Route | Kind | Why |
+|---|---|---|
+| `/` Calculator | **App screen** | Worked in: inputs, a result, a breakdown. |
+| `/proof` | **App screen** | The detail of one object: the build serving you. |
+| `/how-it-works` | **Page** | Read and scrolled: the argument for the gate. |
+| `/sources` | **Page** | Read and scrolled: formulas and references. |
+| 404, error | Page | Small; follow the page rules. |
 
----
+Dealt with `scripts/draw.mjs`:
+
+- **Pages:** direction *Type and nothing else* (seed 751373261), sector finance. Redraw: the showcase section took
+  *Two giant words compared* instead of *Headline you can type*, because Lydit's input is a whole position (eight
+  fields), not one line of text, and its point is a comparison of two numbers.
+- **App screens:** style *Achromatic ledger* (seed 1037972768), kind finance, palette and type kept from the pages.
+  Redraw: the shell took *No sidebar* instead of *Open plane*, because Lydit has four destinations, two of them read
+  pages with their own header, and the calculator needs the 230px a sidebar would take.
 
 ## 1. Who it is for, and the one action per page
 
-| Reader | What they came for |
+| Reader | Came for |
 |---|---|
 | Binance USDⓈ-M perp trader | A liquidation price that matches Binance's engine, including other cross positions, and a link to share it. |
-| Trading educator on X | A scenario link followers can open and recompute, stamped with the build it came from. |
-| Hackathon judge | Evidence that the claim holds: Binance FAQ, scenario link, red-then-green PR, suite, proof line. |
+| Trading educator on X | A scenario link followers can open and recompute. |
+| Hackathon judge | Proof the claim holds: Binance FAQ, scenario link, red-then-green PR, suite, proof line. |
 
-| Page | The one action it drives |
+| Screen | Its one question or action |
 |---|---|
-| `/` Calculator | Enter a position (or load a Binance example) and read the liquidation price. Secondary: copy the scenario link. |
-| `/proof` | Open a golden case's scenario and compare it with Binance's FAQ. |
-| `/sources` | Check a formula term against Binance's FAQ. |
-| `/how-it-works` | Open the demo PR. |
-| 404 / error | Go back to the calculator. |
-
----
+| `/` | "Where does this position liquidate, by Binance's formula?" Action: copy the scenario link. |
+| `/proof` | "Did the build serving me pass the golden suite?" Action: open the check. |
+| `/how-it-works` | Open the calculator. |
+| `/sources` | Read Binance's FAQ. |
+| 404, error | Open the calculator. |
 
 ## 2. Visual direction
 
 ### Thesis
-**Dark stone, one streak of gold.** Lydite is the touchstone: gold streaked on black stone and judged against reference needles it can't change. The interface is the stone (quiet, cool, neutral surfaces) and the only color that means "this is the number" is the gold streak. Everything else stays out of the way. The product is about exactness, so it looks like an instrument and not like a trading terminal.
+**A gold streak on black stone.** Lydit is named after lydite, the touchstone: gold was drawn across black stone and
+its streak laid beside streaks from reference needles of known purity. The pages are typographic set pieces on paper
+and stone; wherever type or a number crosses onto the stone, it turns gold. The app screens are a quiet ledger in
+ink, and the one hue on them is that same gold, on the liquidation price.
+
+**The idea:** on these pages, Binance's published example becomes the reference needle, and this build's own answer
+to it is set at display size for the visitor to compare.
+
+**The live thing (how-it-works):** a BTC mark-price slider under Binance's ETH example. The liquidation price that
+counts the BTC position follows the slider; the per-position number never moves. That is the cross-margin blind spot,
+shown with the engine.
 
 ### Palette
-Tokens are CSS variables. Theme follows `prefers-color-scheme`, with a manual toggle stored per viewer (`data-theme` on `<html>`). One accent (gold). Pass and fail colors are semantic state, used only for check results and field errors.
+The dealt palette (*Report blocks*: white ground, flat blocks of an accent, a pale field, a bright field and black)
+kept its proportions and took its colours from the subject: black stone and its gold streak.
 
-| Token | Dark | Light | Use |
-|---|---|---|---|
-| `--bg` | `#0E0F10` | `#F2F3F4` | Page |
-| `--surface` | `#15171A` | `#FAFAFB` | Panels (result, status) |
-| `--surface-2` | `#1C1F23` | `#E9EBED` | Inputs, segmented track, code blocks |
-| `--line` | `#2A2E33` | `#D5D9DD` | Dividers, input borders |
-| `--line-strong` | `#3A3F45` | `#B5BBC1` | Hover borders |
-| `--text` | `#ECEDEE` | `#121416` | Body, numbers |
-| `--muted` | `#9CA3AB` | `#575E66` | Labels, help text, placeholders (AA on every surface) |
-| `--accent` | `#D6B656` | `#7D5F10` | Gold streak, links, focus ring, active state |
-| `--accent-solid` | `#D6B656` | `#7D5F10` | Primary button fill |
-| `--on-accent` | `#0E0F10` | `#FAFAFB` | Text on primary button |
-| `--pass` | `#4CB782` | `#1E7A4C` | Check passed |
-| `--fail` | `#F2555A` | `#C0322F` | Check failed, field errors |
+| Token | Value | Use |
+|---|---|---|
+| `--bg` | `#ffffff` | Paper: the page ground |
+| `--surface` | `#f4f4f2` | One tone step: filled panels, inputs on pages |
+| `--ink` | `#141414` | Lydite black: text, the stone field |
+| `--muted` | `#5c5c5a` | Secondary text (6.7:1 on white) |
+| `--accent` | `#c9a54a` | Gold: the page's action button (ink text on it) |
+| `--accent-ink` | `#141414` | Text on gold |
+| `--field-stone` / ink | `#141414` / `#f2f0ea` | Stone chapters: hero lower field, check-it table, footer |
+| `--streak` | `#d4b25a` | Gold ink on stone (8.8:1) |
+| `--field-gold` / ink | `#c9a54a` / `#141414` | The held-out answers chapter |
+| `--field-pale` / ink | `#e3e5e0` / `#141414` | Pale stone chapters |
+| `--data-gold` | `#8a6a12` | The app's one data hue on white (5:1) |
 
-Why gold here: the skill bans brass/ochre as a default "premium" reach. This is not that. Gold on a touchstone is the literal mechanism the product is named after, so the accent carries meaning. It is a pale assay gold on cool stone greys, never on cream.
+App tokens (achromatic ledger; colour under 1% of pixels):
 
-No pure black or white. No gradients, glows, glass, or shadows; elevation comes from surface tone and 1px lines. Focus ring: 2px `--accent`, 2px offset.
+| Token | Value |
+|---|---|
+| `--ground` | `#f4f4f2` |
+| `--card` | `#ffffff` |
+| `--well` | `#f7f7f5` |
+| `--border` | `#e6e6e3` |
+| `--rule` | `#efefec` |
+| `--control` | `#cfd0cc` |
+| `--text` / `--muted` / `--faint` | `#141414` / `#5c5c5a` / `#6b6b69` |
+| `--primary` / ink | `#141414` / `#ffffff` (near-black primary button) |
+| `--hue` | `#8a6a12` (the liquidation price and its strip) |
+| `--positive` / `--negative` | `#247b50` / `#c4242a`, pills `#dcfae5`/`#04250e`, `#ffedea`/`#831c1e` |
+
+No gradients, glows, glass or shadows at rest. Pages separate surfaces by tone and colour fields, never by lines;
+app screens may use 1px borders and row rules (§13 of the app chapter).
 
 ### Type (two families)
-- **Geist** for all text. **Geist Mono** for every number, formula and SHA, with `tabular-nums`.
-- Loaded with `next/font` (the `geist` package), self-hosted, `display: swap`.
+- **Bodoni Moda** 500 (display): page headlines, statements, the two specimen figures, the formulas; on app screens
+  one job only, the liquidation price figure.
+- **Jost** 400/500 (text): everything else, including every app label, input and table, with tabular figures.
+- Loaded with `next/font/google`.
 
-| Role | Size / line-height | Weight |
-|---|---|---|
-| Page H1 | 32/38 mobile, 44/48 desktop, tracking -0.02em | 600 |
-| Calculator H1 | 28/34 mobile, 36/42 desktop | 600 |
-| H2 | 22/28 | 600 |
-| Body | 16/26, max 65ch | 400 |
-| Label | 14/20 | 500 |
-| Help / meta | 13/20, `--muted` | 400 |
-| Result number | Geist Mono 40/44 mobile, 52/56 desktop | 500 |
-| Secondary numbers | Geist Mono 20/28 | 500 |
+| Role | Size |
+|---|---|
+| Page hero | clamp(56px, 9.5vw, 150px), capitals, leading 0.86, tracking -0.02em |
+| Page specimen figures | fitted to half the width by measurement |
+| Page section heading | 32–64px (`--step-head`) |
+| Page statement | 36px desktop, 24px phone, at most three lines (four on a phone) |
+| Page lead / body / small | 20–26 / 17–19 / 13–14px |
+| App h1 | 24px Jost 600 |
+| App answer figure | 36px Bodoni Moda (1.5× the 24px siblings) |
+| App KPI / card title / body / label | 24 / 16 / 14 / 12–13px |
 
 ### Spacing
-4px base. Scale: `4, 8, 12, 16, 24, 32, 48, 64, 96`. Field gap 8 (label/input/help), between fields 20, between form groups 32, between page sections 64 mobile / 96 desktop. Container `max-w-[1200px]`, side padding 16 mobile / 32 desktop. Header 64px.
+4px base. Pages: margin clamp(16px, 2.2vw, 32px), 12-column grid, section gaps 160px desktop and 88px phone (a change
+of field colour lets them close up). App: one gutter of 16px, card padding 20px, canvas column 1152px, title 32px
+below the bar, controls 36px, inputs 40px, table rows 44px.
 
 ### Shape
-One radius: **6px** on every control, panel, chip and code block. No pills, no circles except icon glyphs.
+App: tight radii, cards 8px, controls 6px, chips 4px. Pages: square corners on pictures and fields; buttons square.
 
-### Motion rules
-- CSS transitions only, on `transform` and `opacity`, `cubic-bezier(0.16, 1, 0.3, 1)`, 120 to 240ms.
-- **Numbers never animate.** No count-ups, no tickers, no digit rolls. A number is either exact and final or absent. (TestSprite reads the DOM; an in-flight value is a wrong value.)
-- When the liquidation price changes, the gold streak under it redraws (`scaleX` 0 to 1, 240ms). That is the only "something changed" signal.
-- Copy link: icon swaps to a check and the label reads "Copied" for 1.6s.
-- Buttons: `:active` moves down 1px.
-- No scroll reveals, no page-load choreography, no marquee, no parallax.
-- `prefers-reduced-motion: reduce` removes every transition.
+### Motion
+- **Pages:** colour by chapter is the signature (each chapter a full-bleed field; the fixed corner navigation takes the
+  ink of the field beneath it, 300ms). The hero's two lines rise from their masks on load (900ms, expo out, 110ms
+  stagger), settled by 1.2s. Each section's parts enter once in reading order (heading, text, figure; 70ms apart,
+  rising 24px). The held-out answers light one at a time (2s each, 400ms colour change). The touchstone photograph
+  drifts from 1.08 to 1.0 scale with the scroll. Press and hover feedback on every control.
+- **App screens:** no entrances. Feedback only: press (140ms), hover (180ms), the copy button's "Copied". Numbers never
+  animate: TestSprite reads the DOM, and an in-flight number is a wrong number.
+- `prefers-reduced-motion: reduce` shows the finished page: no travel, no cycling, no drift.
 
-### Icons
-`@phosphor-icons/react`, regular weight, 16 or 20px. Used for: copy, check, external link, status glyphs (passed, failed, pending, unknown), theme toggle, add/remove position. Nothing decorative.
+## 3. Screens and sections, in build order
 
-### Imagery
-None. This is a tool; photography would be decoration and every external fetch breaks N-3. The one visual on `/how-it-works` is a real component: the engine computing Binance's ETH example live, with and without the other position. No fake PR screenshots; the page links the real PR.
+### 3.0 Shared
 
----
+- **Mark:** a small black stone with one gold streak across it (drawn SVG, 18px), then "Lydit".
+- **Proof line** (PRD P-1, P-2) on every screen: the served short SHA, the environment and the TestSprite result,
+  linking to `/proof`. App screens: in the top bar's right cluster. Pages: in the corner navigation.
+  States: passed, failed, running, no check for this commit, status unavailable (never "passed" on error),
+  "local build" when there is no SHA.
 
-## 3. Pages in build order
+### 3.1 `/` Calculator (app screen)
 
-### 0. Shell (built with page 1)
+**Top bar** (48px, page ground, centred 1152px column): mark and name on the column's left edge; links Calculator,
+Proof, Sources, How it works (14px, grey; current in ink); right cluster: the proof line. Phone: mark, proof glyph and
+a Menu button that opens a full-screen sheet with the links.
 
-**Header** (64px, static, not sticky)
-- Left: the mark (a short horizontal gold bar, the streak, 14×4px, 6px radius) + wordmark "Lydit".
-- Nav: `Calculator` · `Proof` · `Sources` · `How it works`. Active link in `--text` with a 2px gold underline; others `--muted`.
-- Right: theme toggle (icon button, label "Switch to light theme" / "Switch to dark theme").
+**Title row:** h1 "Liquidation calculator". Subline (the finding, live): with other positions, "Other cross
+positions bring liquidation {gap} USDT closer to mark."; otherwise "Binance USDⓈ-M, one-way mode. Computed at full
+precision, shown to 2 decimals." Right: the Binance examples control ("ETH long", "BTC long", "Example 1") and the
+primary button **Copy link**.
 
-**Proof line** (every page, directly under the header, 40px, `--surface`, bottom line)
-- Left: `Serving commit` + short SHA in mono (`proof-sha`), then environment: `production`, or `preview for PR #12` (`proof-env`, `proof-pr`).
-- Right: status glyph + `TestSprite check:` + state (`proof-status`) + `View check` link (`proof-link`, only when a URL exists).
-- States and copy:
-  - passed: "passed" (`--pass`, check-circle)
-  - failed: "failed" (`--fail`, x-circle)
-  - pending: "running" (`--muted`, dashed circle)
-  - not found: "no check for this commit" (`--muted`)
-  - unavailable: "status unavailable" (`--muted`, question). Never "passed" on error (P-5).
-  - loading: a skeleton bar the width of "passed" so the line doesn't shift.
-  - local dev (no SHA): left reads "Local build. No commit to check." and the right side is hidden.
+**Grid** (12 columns, 16px gutter, 12 × 80 + 11 × 16 = 1136 + 16px of side air in a 1152 column, written in the CSS):
 
-**Footer**
-- One line: "Lydit checks Binance USDⓈ-M liquidation prices in one-way mode. It is a calculator, not advice; Binance's engine has the final word."
-- Links: `Binance FAQ` (external), `Source on GitHub` (external).
+- **Position card** (columns 1–7): groups "Position" (margin mode, side, size, entry price, mark price), "Margin"
+  (wallet balance, maintenance margin rate %, maintenance amount) and "Other cross positions". Other positions are a
+  real table: Side, Size, Entry, Mark, Rate %, Amount, then the computed UPNL and MM, and a remove action; "Add
+  position" under it; a switch to enter TMM1 and UPNL1 as totals. Isolated mode: "Isolated margin ignores other
+  positions. Switch to cross to add them."
+- **Answer card** (columns 8–12, sticky): "Liquidation price", the figure in Bodoni at 36px with "USDT" in grey; the
+  **price strip** (the screen's own element): one axis with the mark price (ink dot), the entry (hollow ink tick), the
+  liquidation price (the gold mark, joined to the mark price by the gold distance bar) and, when other positions
+  exist, the liquidation price of this position alone (hollow grey tick, labelled "Alone"). Under it, two figures at
+  24px: Maintenance margin, and Distance from mark with its percent and direction.
+- **Breakdown card** (columns 1–12): "How this number is built". A table: Step, Formula, With your inputs, Value.
+  Rows: each other position's UPNL and MM, TMM1, UPNL1, Numerator, Denominator, Liquidation price, Maintenance margin.
+  Terms link to `/sources#var-…`. Footer: "Formula source: Binance FAQ".
 
-### 1. `/` Calculator
+**States:** empty ("Enter a position, or load one of Binance's examples."), partial (maintenance margin shown; the
+price says what is missing: "Add entry price and wallet balance to get a liquidation price."), invalid ("Fix the
+highlighted fields to get a result.", no figures), no liquidation ("No liquidation price" and the reason), already past
+("Mark price is already past this liquidation price."). Field errors under the field (PRD E-4). Copy link: "Copied",
+or a selectable field if the clipboard is blocked.
 
-**Intro** (left column, above the form; the result panel starts level with the H1 so the answer is above the fold on desktop)
-- H1: "Liquidation price, held to Binance's own answers"
-- Sub: "Binance USDⓈ-M futures in one-way mode. Every release must reproduce Binance's worked examples before it ships."
-- Preset row, label "Load a Binance FAQ example", buttons:
-  - `ETH long, cross` (Example 2, ETHUSDT, with the BTC position as the other cross position, entered as position details)
-  - `BTC long, cross` (Example 2, BTCUSDT, with the ETH position as the other)
-  - `Maintenance margin only` (Example 1: size, mark, rate, amount)
-- Help under presets: "Presets fill inputs only. Every output is computed by this build."
+**Test ids** (PRD C-6, C-7) are kept exactly: `liq-price`, `maint-margin`, `distance-abs`, `distance-pct`, `input-*`,
+`preset-*`, `copy-link`, `no-liq`, `result-*`, `other-n-*`.
 
-**Form** (left column on desktop)
+**Phone:** the bar folds as above; title, examples and Copy link; the answer card comes first (it is the question),
+then the position card, then the breakdown as two-line rows; the other-positions table becomes one card per position.
 
-Group "Position"
-- Margin mode: segmented `Cross` / `Isolated` (`input-mode`)
-- Side: segmented `Long` / `Short` (`input-side`)
-- Size, help "In coins of the base asset, without a sign." (`input-size`)
-- Entry price, help "Your average entry, in USDT." (`input-ep`)
-- Mark price, help "Sets the maintenance margin and the distance to liquidation." (`input-mp`)
+### 3.2 `/proof` (app screen)
 
-Group "Margin"
-- Wallet balance, help in cross: "Your cross wallet balance, in USDT." In isolated: "The margin allocated to this position, in USDT." (`input-wb`)
-- Maintenance margin rate (%), help "The rate for your position's tier, from Binance's margin table." (`input-mmr`)
-- Maintenance amount, help "The tier's maintenance amount (cumB), in USDT." (`input-cum`)
+Same bar. h1 "Proof". Subline: "Commit {short} {env}. Checked {time} UTC." Primary: **Open the check** (when a check
+link exists).
 
-Group "Other cross positions"
-- Intro: "Their losses and margin share your cross balance, so they move this price. Leave this empty if it is your only position."
-- Segmented: `Enter positions` / `Enter totals`
-- Positions mode: one card per position (up to 5) with Side, Size, Entry price, Mark price, Maintenance margin rate (%), Maintenance amount. Buttons `Add position`, `Remove`. Test ids `other-1-size` etc.
-- Totals mode: "Maintenance margin of other positions (TMM1)" (`input-tmm`), "Unrealized PnL of other positions (UPNL1)" with help "Negative for a loss." (`input-upnl`)
-- In isolated mode the group collapses to: "Isolated margin ignores other positions. Switch to cross to add them." Its values are kept, not sent to the engine.
+- **Status card** (columns 1–5): "TestSprite check", the result in Bodoni at 36px with its glyph (passed in
+  `--positive`, failed in `--negative`, others in grey), one sentence on what it means.
+- **Build card** (columns 6–12): key-value rows: Commit (full SHA, monospace as an ID), Environment, Pull request,
+  Branch, Checked at.
+- **Golden suite** (columns 1–12): the 16 cases as a table: ID, Case, What it checks, Kind (Published, Derived,
+  Behaviour as pale pills), Open (scenario link where the inputs are Binance's own). Expected values never appear.
+- **Holdout note**: "If the answers lived in this repo, one pull request could change the formula and the expected
+  value together, and the check would stay green. They live in the TestSprite suite, which no pull request can edit.
+  Search the repo: no source, test or fixture file holds an expected liquidation price."
 
-Field errors (E-4), below the input in `--fail`, input border turns `--fail`, `aria-invalid` + `aria-describedby`:
-- not a number: "Enter a number, like 1456.84."
-- size / entry / mark: "Must be greater than 0."
-- rate: "Must be at least 0% and below 100%."
-- amount, wallet balance: "Can't be negative."
-- totals: "Enter a number, like -56354.57."
+Phone: status first, build rows, then the suite as two-line rows (case on line 1; ID, kind and link on line 2).
 
-**Result panel** (right column, sticky on desktop)
-- "Liquidation price" + `USDT`. Number alone in its element (`liq-price`). Gold streak under it.
-- "Maintenance margin" (`maint-margin`), USDT.
-- "Distance from mark": absolute (`distance-abs`) USDT and percent (`distance-pct`) %, then "below mark" / "above mark".
-- `Copy link` button (`copy-link`), primary.
-- Footnote: "Decimal math, shown to 2 places. Binance notes its engine can differ slightly in the last decimal."
-- States:
-  - empty: "Enter a position, or load an example above, to see where it liquidates." (`result-empty`)
-  - partial: maintenance margin shows when size, mark, rate and amount are valid; the price slot reads "Add entry price and wallet balance to get a liquidation price." listing only what's missing.
-  - invalid: "Fix the highlighted fields to get a result." No numbers shown (`result-invalid`).
-  - no liquidation (E-3): heading "No liquidation price" (`no-liq`), reason either "The formula lands at zero or below: this balance covers the position at any price." or "The formula's denominator is zero for these inputs."
-  - already past: warning under the price, "Mark price is already past this liquidation price."
+### 3.3 `/how-it-works` (page)
 
-**Breakdown** (full width under the form + result, `breakdown`)
-- H2: "How this number is built"
-- Sub: "Binance's one-way formula with your inputs substituted. Shown to 2 decimals, computed at full precision."
-- Rows, each: label, expression in mono, substituted values, result right-aligned:
-  - Inputs: WB, TMM1, UPNL1, cumB, Side, Position, EP, MMR (each term links to `/sources#var-…`)
-  - Other positions (only when entered as positions): per position `UPNL = side × size × (mark − entry)` and `MM = size × mark × MMR − amount`, then the sums.
-  - Numerator: `WB − TMM1 + UPNL1 + cumB − Side × Position × EP`
-  - Denominator: `Position × MMR − Side × Position`
-  - Liquidation price: numerator ÷ denominator
-  - Maintenance margin: `size × mark × MMR − amount`
-- Footer link: "Formula source: Binance FAQ".
-- Hidden until there's a result; empty state text: "The breakdown appears once there's a result."
+Corner navigation: "Lydit" top-left; top-right "Sources", the proof line, and the action **Open the calculator**.
 
-**Mobile result bar** (below 1024px only): fixed bottom bar, `--surface`, top line: "Liquidation price" + the number + `See result` (scrolls to the panel). No test ids (the panel owns them). Hidden when the result panel is in view.
+1. **Hero, headline across two fields.** Paper above, stone below, meeting at half height. h1 in capitals:
+   "HELD TO / THE ANSWER", centred across the seam: ink on paper, gold where it crosses onto the stone. Supporting
+   sentence on the stone: "A Binance futures liquidation calculator. No release merges unless it reproduces Binance's
+   own worked examples."
+2. **Same account, two answers** (paper). Paragraph: "Binance's Example 2 is one cross wallet holding an ETH long and
+   a BTC long. The BTC position's loss and margin eat into the shared balance, so the ETH long liquidates sooner. A
+   calculator that reads one position at a time misses it." Two specimen figures, computed live: "ETH long, as Binance
+   computes it" and "ETH long, read alone". The live thing: a BTC mark-price slider with its value and "Reset to
+   Binance's 31,967.27"; a line "Reading the ETH long alone shows {gap} USDT more room than the account has." Rate and
+   maintenance amount stay at Example 2's values.
+3. **From pull request to merge** (pale stone), a call-and-response column:
+   - "First, a pull request changes the math." Call: `simplify: compute liquidation per position`. Response: the
+     preview's answer card showing the per-position number, and its proof line reading "failed".
+   - "Then TestSprite opens Binance's example on the preview." Call: "Open the ETH cross scenario. Check that the
+     liquidation price matches Binance's published value." Response: "One number disagrees, so the check fails and
+     the merge is blocked. The report names the case and gives a fix prompt."
+   - "Then the fix goes green, and only then can it merge." Call: `fix: restore other-position terms`. Response, wide:
+     the answer card with Binance's number and the proof line reading "passed".
+4. **The touchstone** (full-bleed photograph, the page's one rest): two touchstones, the left one streaked with gold.
+   Caption: "Two touchstones. The streaks on the left are gold."
+5. **Held out** (gold field), one sentence at statement size: "**Held out of every pull request:** Example 1's
+   maintenance margin, ETHUSDT's liquidation price, its maintenance margin, BTCUSDT's liquidation price and its
+   maintenance margin." One answer lit at a time.
+6. **Check it yourself** (stone field), a table at one type size: what, where, what you will see, link. Rows:
+   Binance's FAQ; the ETH scenario on Lydit; the demo pull request; the TestSprite suite; the source; this build's
+   check. Links that do not exist yet read "Linked once it is public."
+7. **Why Lydit** (paper), two columns with highlighted words: "Lydit takes its name from lydite, the black stone of
+   ancient Lydia that assayers called the touchstone. Around 560 BCE, under Croesus, Lydia struck some of the first
+   coins of pure gold, and the stone was how a buyer told gold from a good imitation. The metal was drawn across the
+   stone and its streak laid beside streaks from reference needles of known purity, so the sample was never judged
+   against itself. Lydit works the same way. Binance's published examples are the needles. Every release is drawn
+   against them on its pull request preview, and the needles sit where the pull request cannot reach. A number that
+   does not match does not merge."
+8. **Gold, and gold-coloured** (pale stone): the Croesid gold stater (Lydia, ca. 560–546 BCE) beside a fourrée stater
+   (Kyzikos, ca. 600–500 BC: a gold skin over a base-metal core), equal size, captions from the Met.
+9. **Footer** (stone): "LYDIT" at full width; Open the calculator, See the proof, Read the sources at 32px in gold;
+   small links (Binance FAQ, Source on GitHub, the demo PR); the picture credits; "A calculator, not advice. Binance's
+   engine has the final word."
 
-### 2. `/proof`
+### 3.4 `/sources` (page)
 
-- H1: "The check behind this build"
-- Sub: "Which commit is serving you, and whether it passed TestSprite's golden suite."
-- **Status panel** (`--surface`): Commit (full 40-char SHA, mono), Environment, Pull request (when preview), TestSprite check (glyph + state), Checked at (local time), primary button `Open the check` (external). Same states as the proof line. (`proof-page-sha`, `proof-page-status`)
-- **Binance's published examples**: intro "Each case opens the inputs from Binance's FAQ. Open it, then compare with Binance's own page." One row per scenario (not one card per case, which repeated ETH and BTC twice): title, a plain summary of Binance's inputs, the case IDs it checks, and links `Open scenario` and `Binance FAQ`:
-  - Build identity tripwire: "Asserts a real commit SHA and the preview environment on PR runs." Link: `Open /api/build`.
-  - Maintenance margin, Example 1: "Asserts the maintenance margin."
-  - ETHUSDT cross long: "Asserts the liquidation price."
-  - ETHUSDT cross long: "Asserts the maintenance margin."
-  - BTCUSDT cross long: "Asserts the liquidation price."
-  - BTCUSDT cross long: "Asserts the maintenance margin."
-- **Derived edge cases** (compact two-column group): intro "Computed from the formula and labelled as derived in the suite. Their inputs live in the suite with their answers." Isolated long. Isolated short. Cross short. Cross, single position. Tier boundary.
-- **Behaviour checks** (same compact group): Invalid input shows a field error and no result. No-liquidation state. Copied link restores the same inputs and outputs. Preset fills the ETH case. Proof page shows the commit and a check status.
-- **Why the expected numbers aren't here**: "If the answers lived in this repo, one pull request could change the formula and the expected value together, and the check would stay green. They live in the TestSprite suite, which no pull request can edit. Search the repo: no source, test or fixture file holds an expected liquidation price."
+1. **Hero** (paper, type only): h1 "EVERY TERM, / SOURCED". Sentence: "The formulas Lydit computes, where each term
+   comes from, and how a scenario link carries every input." Action: **Read Binance's FAQ**.
+2. **Two formulas** (stone): MM and the one-way liquidation formula set large in Bodoni, the result side in gold. Note:
+   "Hedge-mode terms are zero in one-way mode, so they are left out." Beside them, a live worked fragment: the
+   liquidation formula on Binance's ETH example, computed by this build.
+3. **Every variable** (paper): a table at one size: term, what it is, where it comes from. Each row is an anchor
+   (`#var-wb` …) that the calculator's breakdown links to, and lights when targeted.
+4. **The assay office** (full-bleed photograph): "Weighing gold bars at the New York assay office, 1917."
+5. **Scenario links** (pale stone). The live thing: "Paste a scenario link". The ETH example is prefilled; under it,
+   every parameter the link carries, as a table that updates as you type, and a button to open it in the calculator.
+   Then the parameter reference in three groups (Position, Margin, Other positions).
+6. **Not covered** (paper), split: "Hedge mode, portfolio margin, fees, funding and other venues. Hyperliquid
+   publishes formulas but no worked numbers, so there is nothing to hold it to yet." On the right, Agricola's woodcut
+   (De re metallica, 1556, Book X: parting gold from silver), multiplied onto the pale field.
+7. **Footer** as on `/how-it-works`.
 
-### 3. `/sources`
+### 3.5 404 and error (pages)
 
-- H1: "Formulas and sources"
-- Sub: "Every term Lydit uses, where it comes from, and how a scenario link is built."
-- **Maintenance margin**: `MM = position notional × MMR − maintenance amount`, `position notional = size × mark price`. Note "Binance FAQ, Example 1."
-- **Liquidation price, one-way mode**: the formula as a two-line fraction in mono. Note "Hedge-mode terms are zero in one-way mode, so they're left out."
-- **Variables** (each with an anchor `#var-wb` etc., two-column definition grid, not a ruled table): WB, TMM1, UPNL1, cumB, Side, Position, EP, MMR with the PRD meanings.
-- **Other positions**: `UPNL = side × size × (mark − entry)`; MM as above; TMM1 and UPNL1 are the sums.
-- **Scenario links**: "Every input is a query parameter. Opening the link restores the inputs and computes right away." Example URL in a code block with a copy button. Parameters grouped in three chunks (Position, Margin, Other positions), one soft divider each.
-- **Not covered**: "Hedge mode, portfolio margin, fees, funding and other venues. Hyperliquid publishes formulas but no worked numbers, so there is nothing to hold it to yet."
-- Primary link: `Read Binance's FAQ` (external).
-
-### 4. `/how-it-works`
-
-- H1: "The pull request can't grade itself"
-- Sub: "Each PR preview must reproduce Binance's published answers. Those answers live in TestSprite, out of the PR's reach."
-- CTAs: `Open the demo PR` (primary, external), `See the proof` (secondary, `/proof`).
-- **Same account, two answers** (the live component): "Binance's ETH example shares its cross wallet with a BTC position. Drop that position, as a per-position calculator does, and the price moves." Two figures side by side: "With the BTC position, as Binance computes it" and "ETH position alone". Under them: "The single-position number sits {Δ} USDT lower, {pct}% more room than the account has." The gap is computed from the two displayed 2-decimal prices so it matches a reader's own subtraction. Caption: "Both numbers are computed live by this build from Binance's inputs." Links: `Open with BTC` / `Open without BTC` (scenario links). All numbers come from the engine at render; none are written in source.
-- **From pull request to production** (vertical sequence, verb labels, no step numbers):
-  - Open a pull request: "A person or a coding agent changes the math. Vercel builds a preview for that PR."
-  - TestSprite tests the preview: "The GitHub App waits for the preview, then runs the golden suite against it in a browser."
-  - A wrong number blocks the merge: "Each step checks one displayed number against Binance's published value. One mismatch fails the check."
-  - The report drives the fix: "TestSprite's PR comment names the failing case and gives a fix prompt. The agent never holds a TestSprite key."
-  - Green, then merge: "The check reruns on the fix commit. Once it passes, the PR can merge."
-  - Production shows it: "The live app reads the check for the commit it serves and shows it on every page."
-- **Where the answer key lives** (two columns, contrast):
-  - "Tests in the repo": "The PR can edit the formula and the expected value in one diff. The check stays green."
-  - "Holdout in TestSprite": "The expected values sit in the suite. The PR can only change code, so a wrong formula meets the old answer."
-- **Check it yourself** (ordered trail of real links): Binance FAQ, ETH scenario on Lydit, `Open the demo PR`, TestSprite suite, search the repo, proof line on `/proof`. Links that don't exist yet (demo PR, suite) render as plain text "Linked once the PR is open." until their env var is set.
-- **The name**: "Lydite is the touchstone. Assayers streaked gold on it next to reference needles of known purity, so the gold was judged against something it couldn't change."
-
-### 5. 404 and error
-
-- 404: H1 "No page at this address". Sub "The calculator is at the root." Button `Go to the calculator`.
-- Error: H1 "This page failed to render". Sub "Lydit shows nothing rather than a wrong number. Try again, or start over from the calculator." Buttons `Try again`, `Go to the calculator`.
-
----
+Two fields, as the hero. 404: "NO PAGE / HERE", sentence "The calculator is at the root.", action Open the
+calculator. Error: "THIS PAGE / BROKE", sentence "Lydit shows nothing rather than a wrong number.", actions Try again
+and Open the calculator.
 
 ## 4. Components
 
-| Component | Desktop (≥1024) | Mobile (<768; tablet follows mobile until 1024 unless noted) |
+| Component | Desktop | Phone |
 |---|---|---|
-| Header | Logo, nav, toggle in one 64px row | Row 1: logo + toggle. Row 2: nav links in a horizontal scroll row (no hamburger; 4 links) |
-| Proof line | One row, left/right split | Two short rows: commit + env, then status + link |
-| Preset bar | Inline buttons after the label | Horizontal scroll-snap row |
-| Segmented control | Inline, auto width | Full width, equal halves |
-| Field (label, input, help, error) | Two fields per row inside a group where they pair (Entry/Mark, MMR/Amount) | One per row |
-| Other-position card | Fields in a 3-column grid | Fields one per row; `Remove` in the card header |
-| Result panel | Right column (5/12), starts level with the H1, `position: sticky; top: 24px` | In flow after the form; mobile result bar points to it |
-| Mobile result bar | Hidden | Fixed bottom, shown when the panel is off-screen |
-| Breakdown | Expression and result in a grid (label 180px, expression 1fr, result auto) | Stacked: label, expression (wraps at operators), result |
-| Copy link | Button with icon + label | Full width |
-| Status panel | Definition grid, 2 columns | 1 column |
-| Case group | Published: rows with links right-aligned. Derived/behaviour: 2-column grid | All 1 column, links under the text |
-| Flow sequence | Left: sticky heading. Right: sequence with a 1px rail | Rail on the left, heading above |
-| Live comparison | Two figures side by side + delta row | Stacked |
-| Code block | Mono, `--surface-2`, horizontal scroll inside the block only | Same; never widens the page |
-| Theme toggle | Icon button | Same |
-
-All interactive targets at least 40px tall on mobile. Inputs use `type="text" inputmode="decimal"` so the exact typed string round-trips through the URL.
-
----
+| App top bar | 48px; mark, four links, proof line on one row | Mark, proof glyph, Menu sheet |
+| Corner navigation (pages) | Fixed, top corners, ink follows the field beneath | Mark and the action; links in a Menu sheet |
+| Field (app) | Label 14/500 above a 40px input, error then help below | Same, full width, 44px targets |
+| Segmented control | As wide as its options | Full width below 480px |
+| Other-positions table | Table with computed UPNL and MM columns | One card per position |
+| Answer card | Sticky right column | First block on the screen |
+| Price strip | 100% of the card, labels in rows above the axis | Same, three labels at most per row |
+| Breakdown table | Step, Formula, With your inputs, Value | Two-line rows: step and value, then the substitution |
+| Proof table | ID, Case, Checks, Kind, Open | Two-line rows |
+| Hero (two fields) | Seam at 50%, headline at 9.5vw | Seam at 46svh, headline at 15vw |
+| Specimen pair | Two figures side by side, each half the width | Stacked, the second in inverse colours |
+| Call and response | 560px column, the third response 760px | Full width, no indent |
+| Statement (held out) | 36px, three lines | 24px, four lines |
+| Line-up table | Four columns at one size | Two-line entries |
+| Two-column story | `columns: 2`, highlighted words | One column |
+| Picture band | Full-bleed, caption under | Full width, cropped to 4:5 |
+| Footer | Wordmark full width, places, links, credits | Stacked |
 
 ## 5. Avoid
 
-- Hero gradient blobs, glows, glassmorphism, AI purple, neon trading green/red.
-- Crypto-terminal clichés: candlestick backgrounds, price tickers, "to the moon" copy.
-- Animated or counting numbers anywhere.
-- Three equal feature cards. The how-it-works flow is a sequence, not a card row.
-- "Step 1 / Step 2" labels and numbered section eyebrows. Max one small uppercase label per three sections (the calculator uses none).
-- Em-dashes and en-dashes in any visible copy. Use a period, comma, colon or parentheses.
-- Fake screenshots of the PR, the TestSprite report or the app.
-- Decorative status dots. Status glyphs only where they report real check state.
-- "BETA", version numbers, or build strings other than the real commit in the proof line.
-- Pills. One 6px radius everywhere.
-- Placeholder text used as a label.
-- Inter, serif display type, a third typeface.
-- Filler verbs: elevate, seamless, unleash, next-gen, revolutionize.
-- Any expected liquidation price or maintenance margin written in source, copy or fixtures (PRD §7). Numbers on screen come from the engine.
+- Eyebrow labels, pill badges above headings, index numbers (01/02), tiny tracked capitals.
+- Monospace outside code and IDs (the commit SHA is an ID; figures use tabular Jost).
+- Hairline dividers and 1px boxes on pages (app tables and inputs may keep theirs).
+- Gradients, glows, glass, shadows at rest, decorative shapes, emoji.
+- Cream with terracotta; violet or indigo; and black with saturated yellow, which would read as Binance's own brand.
+- Three-up card rows, icon-topped cards, a stock "hero, logos, features, testimonial, pricing" order.
+- Animated or counting numbers; any motion on app screens beyond feedback.
+- Fake GitHub or TestSprite screens; invented customers, quotes or statistics.
+- Any expected liquidation price or maintenance margin in source, copy or fixtures (PRD §7). Every number shown comes
+  from the engine at render time.
+- Found pictures presented as Lydit's own. Every one is credited in the footer.
