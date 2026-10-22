@@ -1,6 +1,5 @@
 import { CheckCircle, XCircle } from "@phosphor-icons/react/ssr";
 import type { Metadata } from "next";
-import Image from "next/image";
 import Link from "next/link";
 import { HeldOut } from "@/components/how/held-out";
 import { TwoAnswers } from "@/components/how/two-answers";
@@ -11,10 +10,6 @@ import { formatFixed } from "@/lib/format";
 import { BINANCE_FAQ_URL, getPreset } from "@/lib/presets";
 import { scenarioHref } from "@/lib/scenario";
 import { getLinks } from "@/lib/site";
-import fourree from "@/public/archive/fourree-stater.jpg";
-import stater from "@/public/archive/gold-stater.jpg";
-import stater2 from "@/public/archive/gold-stater-2.jpg";
-import touchstones from "@/public/archive/2-touchstones.jpg";
 
 export const metadata: Metadata = {
   title: "How it works",
@@ -126,20 +121,7 @@ export default function HowItWorksPage() {
         </div>
       </section>
 
-      {/* 4. The page's one rest: the touchstone itself. */}
-      <figure className="band" data-ink="#f1f1ef" data-ground="#141414">
-        <div className="band__frame">
-          <Image
-            src={touchstones}
-            alt="Two black touchstones on white; the square one on the left carries several streaks of gold"
-            sizes="100vw"
-            className="band__img"
-          />
-        </div>
-        <figcaption className="band__caption">Two touchstones. The streaks on the left one are gold.</figcaption>
-      </figure>
-
-      {/* 5. The held-out answers, one lit at a time. */}
+      {/* 4. The held-out answers, one lit at a time. */}
       <section className="chapter statement" data-ink="#141414" data-ground="#c9a54a" aria-labelledby="held-out">
         <div className="statement__text">
           <h2 id="held-out" className="statement__head">
@@ -149,7 +131,7 @@ export default function HowItWorksPage() {
         </div>
       </section>
 
-      {/* 6. Line-up at one type size, on the stone. */}
+      {/* 5. Line-up at one type size, on the stone. */}
       <section className="chapter lineup" data-ink="#f1f1ef" data-ground="#141414" aria-labelledby="check-title">
         <h2 id="check-title" className="lineup__heading" data-reveal>
           Check it yourself
@@ -188,7 +170,7 @@ export default function HowItWorksPage() {
         </table>
       </section>
 
-      {/* 7. The name, as two columns with highlighted facts. */}
+      {/* 6. The name, as two columns with highlighted facts. */}
       <section className="chapter story" data-ink="#141414" data-ground="#ffffff" aria-labelledby="story-title">
         <h2 id="story-title" className="story__heading" data-reveal>
           Why Lydit
@@ -214,52 +196,36 @@ export default function HowItWorksPage() {
         </div>
       </section>
 
-      {/* 8. Gold, and gold-coloured. */}
+      {/* 7. Gold, and gold-coloured. */}
       <section className="chapter coins" data-ink="#141414" data-ground="#e3e5e0" aria-labelledby="coins-title">
-        <div className="coins__head">
-          <h2 id="coins-title" className="coins__heading" data-reveal>
-            Gold, and gold-coloured
-          </h2>
-          <p className="coins__text" data-reveal>
-            Two Lydian staters of solid gold, and a stater from Kyzikos with a gold skin over a base-metal core. On
-            sight they pass for one another; a reference tells them apart.
-          </p>
-        </div>
-        <div className="coins__row">
-          <figure className="coin" data-reveal style={{ "--i": 0 } as React.CSSProperties}>
-            <div className="coin__frame">
-              <Image
-                src={stater}
-                alt="Lumpy gold coin stamped with a lion and a bull facing each other"
-                sizes="(max-width: 640px) 100vw, 33vw"
-              />
+        <div className="grid">
+          <div className="coins__head">
+            <h2 id="coins-title" className="coins__heading" data-reveal>
+              Gold, and gold-coloured
+            </h2>
+            <p className="coins__text" data-reveal style={{ "--i": 1 } as React.CSSProperties}>
+              Two Lydian staters of solid gold, and a stater from Kyzikos with a gold skin over a base-metal core. On
+              sight they pass for one another; a reference tells them apart.
+            </p>
+          </div>
+          <dl className="coins__list">
+            <div data-reveal style={{ "--i": 1 } as React.CSSProperties}>
+              <dt>Gold stater</dt>
+              <dd>Lydia, ca. 560–546 BCE</dd>
             </div>
-            <figcaption>Gold stater, Lydia, ca. 560–546 BCE</figcaption>
-          </figure>
-          <figure className="coin" data-reveal style={{ "--i": 1 } as React.CSSProperties}>
-            <div className="coin__frame">
-              <Image
-                src={stater2}
-                alt="A second gold coin of the same type, the lion and bull struck more clearly"
-                sizes="(max-width: 640px) 100vw, 33vw"
-              />
+            <div data-reveal style={{ "--i": 2 } as React.CSSProperties}>
+              <dt>Gold stater</dt>
+              <dd>Lydia, ca. 560–546 BCE</dd>
             </div>
-            <figcaption>Gold stater, Lydia, ca. 560–546 BCE</figcaption>
-          </figure>
-          <figure className="coin" data-reveal style={{ "--i": 2 } as React.CSSProperties}>
-            <div className="coin__frame">
-              <Image
-                src={fourree}
-                alt="A worn round coin showing a seated figure, its gold surface rubbed through to darker metal at the rim"
-                sizes="(max-width: 640px) 100vw, 33vw"
-              />
+            <div data-reveal style={{ "--i": 3 } as React.CSSProperties}>
+              <dt>Fourrée stater</dt>
+              <dd>Kyzikos, ca. 600–500 BC: gold over base metal</dd>
             </div>
-            <figcaption>Fourrée stater, Kyzikos, ca. 600–500 BC: gold over base metal</figcaption>
-          </figure>
+          </dl>
         </div>
       </section>
 
-      <PageFooter pictures={["2-touchstones.jpg", "gold-stater.jpg", "gold-stater-2.jpg", "fourree-stater.jpg"]} />
+      <PageFooter />
     </main>
   );
 }

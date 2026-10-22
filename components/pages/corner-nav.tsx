@@ -40,7 +40,7 @@ async function ProofLink() {
       <span data-testid="proof-sha" className="num">
         {build.shortSha ?? "Local build"}
       </span>
-      <span data-testid="proof-status">{STATUS_SHORT[proof.status]}</span>
+      {build.shortSha && <span data-testid="proof-status">{STATUS_SHORT[proof.status]}</span>}
     </Link>
   );
 }

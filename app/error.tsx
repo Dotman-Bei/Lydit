@@ -31,7 +31,7 @@ export default function ErrorPage({ retry }: { error: unknown; retry: () => void
         </TwoFieldHero>
         <SiteIndex />
       </main>
-      <PageFooter pictures={["2-touchstones.jpg", "de-re-metallica-1556-p-357aq20-3.jpg", "gold-stater.jpg"]} />
+      <PageFooter />
       <PageMotion />
     </div>
   );

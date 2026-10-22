@@ -1,13 +1,10 @@
 import type { Metadata } from "next";
-import Image from "next/image";
 import { PageFooter } from "@/components/pages/page-footer";
 import { LinkReader } from "@/components/sources/link-reader";
 import { calculate } from "@/lib/calculate";
 import { formatFixed, formatInput } from "@/lib/format";
 import { BINANCE_FAQ_URL, getPreset } from "@/lib/presets";
 import { scenarioHref } from "@/lib/scenario";
-import assayOffice from "@/public/archive/1917-04-21-iberica-01.jpg";
-import woodcut from "@/public/archive/de-re-metallica-1556-p-357aq20-3.jpg";
 
 export const metadata: Metadata = {
   title: "Sources",
@@ -180,24 +177,11 @@ export default function SourcesPage() {
         </dl>
       </section>
 
-      {/* 4. The page's one rest. */}
-      <figure className="band band--paper" data-ink="#141414" data-ground="#ffffff">
-        <div className="band__frame band__frame--office">
-          <Image
-            src={assayOffice}
-            alt="Five men in a 1917 assay office around a great balance under a glass case, gold bars stacked on its pans"
-            sizes="100vw"
-            className="band__img band__img--office"
-          />
-        </div>
-        <figcaption className="band__caption">Weighing gold bars at the New York assay office, 1917.</figcaption>
-      </figure>
-
-      {/* 5. Scenario links, with the page's live thing. */}
-      <section className="chapter links" data-ink="#141414" data-ground="#ffffff" aria-labelledby="links-title">
+      {/* 4. Scenario links, with the page's live thing. */}
+      <section className="chapter links" data-ink="#141414" data-ground="#e3e5e0" aria-labelledby="links-title">
         <div className="grid">
           <div className="links__text">
-            <h2 id="links-title" className="section-heading" data-reveal>
+            <h2 id="links-title" className="section-heading">
               Scenario links
             </h2>
             <p className="links__lead" data-reveal style={{ "--i": 1 } as React.CSSProperties}>
@@ -215,11 +199,11 @@ export default function SourcesPage() {
         </div>
       </section>
 
-      {/* 6. What Lydit does not cover, beside Agricola's assayers. */}
+      {/* 5. What Lydit does not cover. */}
       <section
         className="chapter not-covered"
         data-ink="#141414"
-        data-ground="#e3e5e0"
+        data-ground="#ffffff"
         aria-labelledby="not-covered-title"
       >
         <div className="grid">
@@ -227,31 +211,21 @@ export default function SourcesPage() {
             <h2 id="not-covered-title" className="section-heading" data-reveal>
               Not covered
             </h2>
-            <ul className="not-covered__list" data-reveal style={{ "--i": 1 } as React.CSSProperties}>
-              <li>Hedge mode</li>
-              <li>Portfolio margin</li>
-              <li>Fees and funding</li>
-              <li>Other venues</li>
-            </ul>
-            <p data-reveal style={{ "--i": 2 } as React.CSSProperties}>
+            <p data-reveal style={{ "--i": 1 } as React.CSSProperties}>
               Hyperliquid publishes its formulas but no worked numbers, so there is nothing yet to hold a release to.
               Lydit adds a venue only when that venue publishes answers it can be checked against.
             </p>
           </div>
-          <figure className="not-covered__picture" data-reveal style={{ "--i": 1 } as React.CSSProperties}>
-            <div className="woodcut">
-              <Image
-                src={woodcut}
-                alt="Woodcut of a sixteenth-century assay workshop: furnaces with glass vessels, a man blowing into a flask, another at a window"
-                sizes="(max-width: 1023px) 100vw, 42vw"
-              />
-            </div>
-            <figcaption>Agricola, De re metallica, 1556, Book X: parting gold from silver.</figcaption>
-          </figure>
+          <ul className="not-covered__list" data-reveal style={{ "--i": 1 } as React.CSSProperties}>
+            <li>Hedge mode</li>
+            <li>Portfolio margin</li>
+            <li>Fees and funding</li>
+            <li>Other venues</li>
+          </ul>
         </div>
       </section>
 
-      <PageFooter pictures={["1917-04-21-iberica-01.jpg", "de-re-metallica-1556-p-357aq20-3.jpg"]} />
+      <PageFooter />
     </main>
   );
 }
