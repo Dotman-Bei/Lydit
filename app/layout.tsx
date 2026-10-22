@@ -1,32 +1,24 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
-import { ProofLine } from "@/components/proof-line";
-import { SiteFooter } from "@/components/site-footer";
-import { SiteHeader } from "@/components/site-header";
-import { themeScript } from "@/lib/theme";
+import { Bodoni_Moda, Jost } from "next/font/google";
 import "./globals.css";
 
-const geistSans = Geist({ variable: "--font-geist-sans", subsets: ["latin"] });
-const geistMono = Geist_Mono({ variable: "--font-geist-mono", subsets: ["latin"] });
+// Dealt type system: Bodoni Moda for display and the answer figure, Jost for everything else.
+const bodoni = Bodoni_Moda({ variable: "--font-bodoni", subsets: ["latin"], weight: ["500"], style: ["normal"] });
+const jost = Jost({ variable: "--font-jost", subsets: ["latin"], weight: ["400", "500", "600"] });
 
 export const metadata: Metadata = {
-  title: { default: "Lydit: Binance liquidation price, checked", template: "%s | Lydit" },
+  title: { default: "Lydit: Binance liquidation price, held to Binance's answers", template: "%s | Lydit" },
   description:
-    "A Binance USDⓈ-M liquidation calculator that must reproduce Binance's published examples before any release can merge.",
+    "A Binance USDⓈ-M liquidation calculator. No release merges unless it reproduces Binance's own worked examples.",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html lang="en" suppressHydrationWarning className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+    <html lang="en" className={`${bodoni.variable} ${jost.variable}`} suppressHydrationWarning>
       <head>
-        <script dangerouslySetInnerHTML={{ __html: themeScript }} />
+        <script dangerouslySetInnerHTML={{ __html: "document.documentElement.classList.add('js')" }} />
       </head>
-      <body className="flex min-h-dvh flex-col">
-        <SiteHeader />
-        <ProofLine />
-        <main className="flex-1">{children}</main>
-        <SiteFooter />
-      </body>
+      <body>{children}</body>
     </html>
   );
 }
