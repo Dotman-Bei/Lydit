@@ -1,6 +1,6 @@
 "use client";
 
-import { useId } from "react";
+import { useEffect, useId, useRef } from "react";
 
 interface FieldProps {
   name: string;
@@ -18,6 +18,24 @@ export function Field({ name, label, help, error, value, unit, testId, onChange 
   const id = useId();
   const describedBy = [error ? `${id}-error` : null, help ? `${id}-help` : null].filter(Boolean).join(" ") || undefined;
 
+  // React drops an input event when a script set the value first (its value tracker sees no change), so
+  // browser test tools that clear a field that way are missed. Native listeners read the box itself.
+  const input = useRef<HTMLInputElement>(null);
+  const latest = useRef({ value, onChange });
+  useEffect(() => {
+    latest.current = { value, onChange };
+  });
+  useEffect(() => {
+    const el = input.current;
+    if (!el) return;
+    const sync = () => {
+      if (el.value !== latest.current.value) latest.current.onChange(el.value);
+    };
+    const events = ["input", "change", "blur"] as const;
+    events.forEach((type) => el.addEventListener(type, sync));
+    return () => events.forEach((type) => el.removeEventListener(type, sync));
+  }, []);
+
   return (
     <div className="field">
       <label htmlFor={id} className="field__label">
@@ -32,9 +50,8 @@ export function Field({ name, label, help, error, value, unit, testId, onChange 
           autoComplete="off"
           spellCheck={false}
           value={value}
+          ref={input}
           onChange={(e) => onChange(e.target.value)}
-          // A browser tool can set the value without an input event; leaving the field still counts as the edit.
-          onBlur={(e) => e.target.value !== value && onChange(e.target.value)}
           aria-invalid={error ? true : undefined}
           aria-describedby={describedBy}
           data-testid={testId}
