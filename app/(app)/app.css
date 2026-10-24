@@ -878,6 +878,18 @@
 .suite .is-end {
   text-align: right;
 }
+.suite__result {
+  white-space: nowrap;
+  color: var(--muted);
+}
+.suite__result-in {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.suite__source {
+  white-space: nowrap;
+}
 .chip {
   display: inline-flex;
   flex: none;
@@ -1000,10 +1012,18 @@
     grid-column: 3;
     grid-row: 1;
   }
-  .suite .is-end {
-    grid-column: 2 / -1;
+  .suite__source {
+    grid-column: 2;
     grid-row: 3;
-    text-align: left;
+    font-size: 13px;
+  }
+  .suite__start {
+    grid-column: 2 / -1;
+    grid-row: 4;
+  }
+  .suite .is-end {
+    grid-column: 3;
+    grid-row: 3;
   }
   .kv > div {
     grid-template-columns: 96px minmax(0, 1fr);

@@ -2,8 +2,9 @@ import { ArrowSquareOut } from "@phosphor-icons/react/ssr";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { Suspense } from "react";
-import { loadProof, StatusGlyph, statusClass, envText } from "@/components/proof/status";
-import { GOLDEN_CASES } from "@/lib/cases";
+import { loadProof, StatusGlyph, statusClass, envText, STATUS_SHORT } from "@/components/proof/status";
+import { GOLDEN_CASES, type GoldenCase } from "@/lib/cases";
+import { BINANCE_FAQ_URL } from "@/lib/presets";
 import type { ProofStatus } from "@/lib/proof";
 
 export const metadata: Metadata = {
@@ -141,8 +142,10 @@ async function ProofScreen() {
                 <th scope="col">Name</th>
                 <th scope="col">Checks</th>
                 <th scope="col">Kind</th>
-                <th scope="col" className="is-end">
-                  Starts from
+                <th scope="col">Source</th>
+                <th scope="col">Starts from</th>
+                <th scope="col" className="is-end suite__result">
+                  This commit
                 </th>
               </tr>
             </thead>
@@ -155,7 +158,10 @@ async function ProofScreen() {
                   <td>
                     <span className="chip">{c.kind}</span>
                   </td>
-                  <td className="is-end">
+                  <td className="suite__source">
+                    <CaseSource kind={c.kind} />
+                  </td>
+                  <td className="suite__start">
                     {c.href ? (
                       <Link href={c.href} prefetch={false} className="row-link" data-testid={`case-${c.id}`}>
                         {c.id === "G-0" ? "/api/build" : "Binance's inputs"}
@@ -163,6 +169,12 @@ async function ProofScreen() {
                     ) : (
                       <span className="suite__held">Inputs held in the suite</span>
                     )}
+                  </td>
+                  <td className="is-end suite__result" data-testid={`case-${c.id}-status`}>
+                    <span className="suite__result-in">
+                      <StatusGlyph status={proof.status} size={14} />
+                      {STATUS_SHORT[proof.status]}
+                    </span>
                   </td>
                 </tr>
               ))}
@@ -172,6 +184,23 @@ async function ProofScreen() {
       </div>
     </>
   );
+}
+
+// Where a case's expected answer comes from (PRD P-6). Links only; the answers themselves stay in the suite.
+function CaseSource({ kind }: { kind: GoldenCase["kind"] }) {
+  if (kind === "Published")
+    return (
+      <a href={BINANCE_FAQ_URL} target="_blank" rel="noreferrer" className="row-link">
+        Binance FAQ
+      </a>
+    );
+  if (kind === "Derived")
+    return (
+      <Link href="/sources" className="row-link">
+        Binance&apos;s formula
+      </Link>
+    );
+  return <span className="suite__held">Lydit&apos;s spec</span>;
 }
 
 function ProofLoading() {
