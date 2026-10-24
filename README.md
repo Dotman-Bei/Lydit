@@ -1,36 +1,89 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Lydit
 
-## Getting Started
+**A Binance USDⓈ-M liquidation gauge that counts your other cross positions. No update goes live unless it reproduces Binance's own worked examples.**
 
-First, run the development server:
+| Case | Binance inputs | Binance's published answer | Lydit's live answer |
+|---|---|---|---|
+| Example 1, BTCUSDT | 10 BTC, mark 26,000, MMR 1%, maintenance amount 1,300 | MM **1,300** ([FAQ][faq]) | [Open in Lydit][ex1] |
+| Example 2, ETHUSDT cross long | WB 1,535,443.01; size 3,683.979; EP 1,456.84; mark 1,335.18; MMR 10%; amount 135,365; BTC position held alongside | LP **1,153.26**, MM **356,512.51** ([FAQ][faq]) | [Open in Lydit][eth] |
+| Example 2, BTCUSDT cross long | WB 1,535,443.01; size 109.488; EP 32,481.98; mark 31,967.27; MMR 2.5%; amount 16,300; ETH position held alongside | LP **26,316.89**, MM **71,200.81** ([FAQ][faq]) | [Open in Lydit][btc] |
+
+The "Open in Lydit" links compute the answer live from the inputs in the link; nothing is stored.
+
+- Live app: https://lydit.vercel.app
+- Proof for the commit being served: https://lydit.vercel.app/proof
+- The caught mistake (red, then green): _linked here once the demo pull request merges_
+- The TestSprite suite: _linked here once it is shared_
+
+> No test file, fixture or source file in this repo holds an expected liquidation price; the answer key lives in the TestSprite suite, outside any PR.
+
+## Why it exists
+
+A calculator that reads each position alone tells a trader holding BTC and ETH in cross margin that the ETH long liquidates at **1,114.78**. Binance's own example for that account says **1,153.26**: the BTC position's unrealized loss and maintenance margin eat into the shared balance. That is about $38 of room the trader does not have. Lydit counts the other positions, shows its working, and is held to Binance's published numbers on every change.
+
+## What the suite covers
+
+The suite runs in TestSprite as frontend tests against each pull request's Vercel preview. Every check asserts one displayed number.
+
+| ID | Kind | What it checks |
+|---|---|---|
+| G-0 | Tripwire | `/api/build` reports a real commit SHA, and `preview` on pull request runs |
+| G-1 | Published | Example 1 maintenance margin |
+| G-2, G-3 | Published | Example 2 ETHUSDT liquidation price and maintenance margin |
+| G-4, G-5 | Published | Example 2 BTCUSDT liquidation price and maintenance margin |
+| D-1 to D-5 | Derived | Isolated long and short, cross short with another position, cross single position, a tier with a maintenance amount |
+| D-6, D-7 | Behaviour | Invalid input shows field errors and no result; a fully covered position shows "No liquidation price" |
+| D-8, D-9 | Behaviour | A copied link restores the same inputs and outputs; the ETH preset fills every input |
+| D-10 | Behaviour | The Proof page shows the served commit and a check status |
+
+The portal's own generated tests (sources, navigation, validation) run alongside these.
+
+## How the gate is wired
+
+1. Every pull request gets a Vercel preview deployment.
+2. The TestSprite GitHub App waits for that preview, runs the suite against it, posts a comment and a `TestSprite` check on the pull request.
+3. "Block PR until tests pass" is on, and `main` requires the check, so a red check cannot merge.
+4. Production deploys from `main`. Every page shows the commit it serves, and `/proof` reads that commit's TestSprite check from GitHub (`/api/proof`, cached for 60 seconds). It never shows "passed" unless GitHub says so.
+
+## The holdout rule
+
+The expected numbers live only in the TestSprite suite. The repo holds the formula, Binance's inputs (as presets and links) and nothing else, so a coding agent that changes the formula cannot change the answer key in the same pull request. A wrong number fails the check instead of quietly passing.
+
+## Formulas
+
+One-way mode, from Binance's FAQ:
+
+- Maintenance margin: `MM = size × mark × MMR − maintenance amount`
+- Liquidation price: `LP = (WB − TMM1 + UPNL1 + cum − side × size × EP) / (size × MMR − side × size)`
+
+`TMM1` and `UPNL1` are the other cross positions' maintenance margin and unrealized PnL; isolated margin sets both to zero. Every term is defined at https://lydit.vercel.app/sources. All money math uses exact decimals (decimal.js), never floating point.
+
+## Run it locally
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm test   # formula properties, validation and link round trips; no expected prices
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Optional environment variables:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+| Name | Purpose |
+|---|---|
+| `GITHUB_TOKEN` | Read-only token for the check-runs API (raises the rate limit). Server only. |
+| `NEXT_PUBLIC_REPO_URL` | Repository link shown on the site |
+| `NEXT_PUBLIC_DEMO_PR_URL` | The red-then-green pull request |
+| `NEXT_PUBLIC_TESTSPRITE_SUITE_URL` | The shared TestSprite suite |
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Sources
 
-## Learn More
+- Binance, How to calculate liquidation price of USDⓈ-M futures contracts: [FAQ][faq]
+- TestSprite GitHub integration: https://docs.testsprite.com/web-portal/integrations/github-integration
+- GitHub check runs API: https://docs.github.com/en/rest/checks/runs
 
-To learn more about Next.js, take a look at the following resources:
+Not covered: hedge mode, portfolio margin and other venues.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+[faq]: https://www.binance.com/en/support/faq/how-to-calculate-liquidation-price-of-usd%E2%93%A2-m-futures-contracts-b3c689c1f50a44cabb3a84e663b81d93
+[ex1]: https://lydit.vercel.app/gauge?venue=binance&mode=cross&side=long&size=10&mp=26000&mmr=0.01&cum=1300
+[eth]: https://lydit.vercel.app/gauge?venue=binance&mode=cross&side=long&size=3683.979&ep=1456.84&mp=1335.18&wb=1535443.01&mmr=0.1&cum=135365&o1side=long&o1size=109.488&o1ep=32481.98&o1mp=31967.27&o1mmr=0.025&o1cum=16300
+[btc]: https://lydit.vercel.app/gauge?venue=binance&mode=cross&side=long&size=109.488&ep=32481.98&mp=31967.27&wb=1535443.01&mmr=0.025&cum=16300&o1side=long&o1size=3683.979&o1ep=1456.84&o1mp=1335.18&o1mmr=0.1&o1cum=135365
