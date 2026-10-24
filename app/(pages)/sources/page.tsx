@@ -1,9 +1,10 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { PageFooter } from "@/components/pages/page-footer";
 import { LinkReader } from "@/components/sources/link-reader";
 import { calculate } from "@/lib/calculate";
 import { formatFixed, formatInput } from "@/lib/format";
-import { BINANCE_FAQ_URL, getPreset } from "@/lib/presets";
+import { BINANCE_FAQ_URL, getPreset, PRESETS } from "@/lib/presets";
 import { scenarioHref } from "@/lib/scenario";
 
 export const metadata: Metadata = {
@@ -192,6 +193,16 @@ export default function SourcesPage() {
               error. Rates travel as fractions; the form shows them as percentages. Up to five other positions travel as
               o1 to o5, or as totals in tmm and upnl.
             </p>
+            <ul className="links__examples" data-reveal style={{ "--i": 3 } as React.CSSProperties}>
+              {PRESETS.map((p) => (
+                <li key={p.id}>
+                  <Link href={scenarioHref(p.scenario)} prefetch={false} data-testid={`sources-example-${p.id}`}>
+                    {p.label}
+                  </Link>
+                  <span>{p.description}</span>
+                </li>
+              ))}
+            </ul>
           </div>
           <div className="links__reader" data-reveal style={{ "--i": 1 } as React.CSSProperties}>
             <LinkReader example={example} />

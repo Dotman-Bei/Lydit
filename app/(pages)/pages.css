@@ -763,6 +763,26 @@
 .links__reader {
   grid-column: 7 / span 6;
 }
+.links__examples {
+  display: grid;
+  gap: 16px;
+  margin-top: 8px;
+  padding: 0;
+  list-style: none;
+}
+.links__examples li {
+  display: grid;
+  gap: 2px;
+}
+.links__examples a {
+  font-weight: 500;
+  color: inherit;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.links__examples span {
+  color: var(--muted);
+}
 [data-ui].reader {
   display: grid;
   gap: 12px;
