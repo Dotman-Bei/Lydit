@@ -91,14 +91,17 @@ export default function LandingPage() {
           </h2>
           <ol className="calls__list">
             <li data-reveal>
-              <p className="calls__say">First, someone changes the math.</p>
-              <p className="calls__call">The change: work out each position on its own.</p>
+              <p className="calls__say">First, someone proposes a change to the math.</p>
+              <p className="calls__call">
+                The change: work out each position on its own. It gets a preview, a private copy of the site with the
+                change in it.
+              </p>
               <div className="calls__response">
-                <Fragment label="The new version shows" value={alone} passed={false} />
+                <Fragment label="The preview shows" value={alone} passed={false} />
               </div>
             </li>
             <li data-reveal>
-              <p className="calls__say">Then TestSprite, an automated tester, tries Binance&apos;s example on it.</p>
+              <p className="calls__say">Then TestSprite, an automated tester, tries Binance&apos;s example on the preview.</p>
               <p className="calls__call">
                 Open Binance&apos;s ETH example. Check that the liquidation price matches the number Binance publishes.
               </p>
@@ -111,7 +114,7 @@ export default function LandingPage() {
               <p className="calls__say">Then the fix passes, and only then does the update go live.</p>
               <p className="calls__call">The fix: count the other positions again.</p>
               <div className="calls__response calls__response--wide">
-                <Fragment label="The fixed version shows" value={withBtc} passed />
+                <Fragment label="The fixed preview shows" value={withBtc} passed />
                 <p className="calls__aside">
                   The same number Binance publishes for this account. Once live, every page shows which version you are
                   using and whether it passed.
