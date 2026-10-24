@@ -6,10 +6,10 @@ import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 
 export const NAV = [
-  { href: "/", label: "Gauge" },
+  { href: "/gauge", label: "Gauge" },
   { href: "/proof", label: "Proof" },
   { href: "/sources", label: "Sources" },
-  { href: "/how-it-works", label: "How it works" },
+  { href: "/#how-it-works", label: "How it works" },
 ] as const;
 
 function isActive(pathname: string, href: string) {

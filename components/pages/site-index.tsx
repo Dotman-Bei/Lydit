@@ -12,7 +12,7 @@ export function SiteIndex() {
 
   const rows = [
     {
-      href: "/",
+      href: "/gauge",
       title: "Gauge",
       text: (
         <>
@@ -21,7 +21,7 @@ export function SiteIndex() {
         </>
       ),
     },
-    { href: "/how-it-works", title: "How it works", text: "Why an update cannot grade itself." },
+    { href: "/#how-it-works", title: "How it works", text: "Why an update cannot grade itself." },
     { href: "/sources", title: "Sources", text: "Every formula and term, and the scenario link format." },
     { href: "/proof", title: "Proof", text: "The commit serving you, and whether it passed." },
   ];

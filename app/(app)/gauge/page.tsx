@@ -2,7 +2,7 @@ import { Suspense } from "react";
 import { Calculator } from "@/components/calculator/calculator";
 import { scenarioFromParams } from "@/lib/scenario";
 
-export default function CalculatorPage({ searchParams }: PageProps<"/">) {
+export default function CalculatorPage({ searchParams }: PageProps<"/gauge">) {
   return (
     <Suspense fallback={<CalculatorLoading />}>
       <CalculatorFromUrl searchParams={searchParams} />
@@ -10,7 +10,7 @@ export default function CalculatorPage({ searchParams }: PageProps<"/">) {
   );
 }
 
-async function CalculatorFromUrl({ searchParams }: Pick<PageProps<"/">, "searchParams">) {
+async function CalculatorFromUrl({ searchParams }: Pick<PageProps<"/gauge">, "searchParams">) {
   const raw = await searchParams;
   const params = new URLSearchParams();
   for (const [key, value] of Object.entries(raw)) {

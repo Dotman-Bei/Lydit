@@ -10,9 +10,9 @@ Lydit has two kinds of screen, built with one palette and one pair of typefaces.
 
 | Route | Kind | Why |
 |---|---|---|
-| `/` Calculator | **App screen** | Worked in: inputs, a result, a breakdown. |
+| `/gauge` Gauge | **App screen** | Worked in: inputs, a result, a breakdown. |
 | `/proof` | **App screen** | The detail of one object: the build serving you. |
-| `/how-it-works` | **Page** | Read and scrolled: the argument for the gate. |
+| `/` Landing | **Page** | Read and scrolled: the argument for the gate. Its "How it works" section is `/#how-it-works`. |
 | `/sources` | **Page** | Read and scrolled: formulas and references. |
 | 404, error | Page | Small; follow the page rules. |
 
@@ -193,7 +193,7 @@ Same bar. h1 "Proof". Subline: "Commit {short} {env}."
 
 Phone: status first, build rows, then the suite as two-line rows (case on line 1; ID, kind and link on line 2).
 
-### 3.3 `/how-it-works` (page)
+### 3.3 `/` landing page (was `/how-it-works`)
 
 Corner navigation: "Lydit" top-left; top-right "Sources", the proof line, and the action **Open the calculator**.
 
@@ -305,3 +305,16 @@ the right (the calculator row quotes Binance's ETH example as this build compute
 - Trader-facing copy uses plain words: update, goes live. "Pull request" and "merge" appear only where the mechanism
   is explained (the step-by-step section on `/how-it-works`, `/proof`, and the PR number in the build status).
 - The how-it-works hero sets "NUMBER GOES LIVE" smaller (8.4vw) so the long line stays on two lines.
+
+## 7. Routes and landing (owner's decision, after review)
+
+- `/` is the landing page. The gauge lives at `/gauge`. Every "How it works" link goes to `/#how-it-works`, the
+  step-by-step section of the landing page.
+- Redirects keep old links working: `/?venue=…` (and `/?size=…`) go to `/gauge` with the query intact, so scenario
+  links in the PRD's format (U-1) still open the gauge; `/how-it-works` goes to `/#how-it-works`.
+- The step-by-step section is "How an update goes live", in plain words: someone changes the math; TestSprite, an
+  automated tester, tries Binance's example on it; one wrong number holds the update back; the fix passes and only
+  then goes live. The AI assistant writing the code never sees the answers.
+- "Why Lydit" is about the technology (exact decimal math, other cross positions, scenarios in the link, answers kept
+  in an outside test suite), not the name's origin.
+- The "Gold, and gold-coloured" coins section is removed.

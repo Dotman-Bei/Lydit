@@ -141,6 +141,6 @@ export function scenarioToParams(s: Scenario): URLSearchParams {
   return p;
 }
 
-export function scenarioHref(s: Scenario, path = "/"): string {
+export function scenarioHref(s: Scenario, path = "/gauge"): string {
   return `${path}?${scenarioToParams(s).toString()}`;
 }

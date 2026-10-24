@@ -12,9 +12,8 @@ import { scenarioHref } from "@/lib/scenario";
 import { getLinks } from "@/lib/site";
 
 export const metadata: Metadata = {
-  title: "How it works",
   description:
-    "Every update must reproduce Binance's published answers before it goes live, and those answers are kept out of the code's reach.",
+    "A Binance futures liquidation gauge that counts your other cross positions. Every update must reproduce Binance's published answers before it goes live.",
 };
 
 // Both fragments in the call-and-response are this build's own answers, computed at render.
@@ -40,7 +39,7 @@ function Fragment({ value, passed, label }: { value: string; passed: boolean; la
   );
 }
 
-export default function HowItWorksPage() {
+export default function LandingPage() {
   const { withBtc, alone } = answers();
   const { demoPrUrl, suiteUrl, repoUrl } = getLinks();
 
@@ -78,42 +77,44 @@ export default function HowItWorksPage() {
         </div>
       </section>
 
-      {/* 3. Call and response, on pale stone. */}
-      <section className="chapter calls" data-ink="#141414" data-ground="#e3e5e0" aria-labelledby="calls-title">
+      {/* 3. How it works: call and response, on pale stone. The nav's "How it works" lands here. */}
+      <section
+        id="how-it-works"
+        className="chapter calls"
+        data-ink="#141414"
+        data-ground="#e3e5e0"
+        aria-labelledby="calls-title"
+      >
         <div className="calls__col">
           <h2 id="calls-title" className="calls__heading" data-reveal>
-            From pull request to merge
+            How an update goes live
           </h2>
           <ol className="calls__list">
             <li data-reveal>
-              <p className="calls__say">First, a pull request changes the math.</p>
-              <p className="calls__call">
-                <code>simplify: compute liquidation per position</code>
-              </p>
+              <p className="calls__say">First, someone changes the math.</p>
+              <p className="calls__call">The change: work out each position on its own.</p>
               <div className="calls__response">
-                <Fragment label="The preview’s liquidation price" value={alone} passed={false} />
+                <Fragment label="The new version shows" value={alone} passed={false} />
               </div>
             </li>
             <li data-reveal>
-              <p className="calls__say">Then TestSprite opens Binance&apos;s example on the preview.</p>
+              <p className="calls__say">Then TestSprite, an automated tester, tries Binance&apos;s example on it.</p>
               <p className="calls__call">
-                Open the ETH cross scenario. Check that the liquidation price matches Binance&apos;s published value.
+                Open Binance&apos;s ETH example. Check that the liquidation price matches the number Binance publishes.
               </p>
               <p className="calls__response calls__response--text">
-                One number disagrees, so the check fails and the merge is blocked. The report names the case and gives a
-                fix prompt; the agent never holds a TestSprite key.
+                One number disagrees, so the check fails and the update is held back. The report names the example that
+                failed and suggests a fix. The AI assistant writing the code never gets to see the answers.
               </p>
             </li>
             <li data-reveal className="calls__last">
-              <p className="calls__say">Then the fix goes green, and only then can it merge.</p>
-              <p className="calls__call">
-                <code>fix: restore other-position terms</code>
-              </p>
+              <p className="calls__say">Then the fix passes, and only then does the update go live.</p>
+              <p className="calls__call">The fix: count the other positions again.</p>
               <div className="calls__response calls__response--wide">
-                <Fragment label="The fixed preview’s liquidation price" value={withBtc} passed />
+                <Fragment label="The fixed version shows" value={withBtc} passed />
                 <p className="calls__aside">
-                  The same number Binance publishes for this account. The live site then shows the check for the commit
-                  it serves, on every page.
+                  The same number Binance publishes for this account. Once live, every page shows which version you are
+                  using and whether it passed.
                 </p>
               </div>
             </li>
@@ -170,57 +171,31 @@ export default function HowItWorksPage() {
         </table>
       </section>
 
-      {/* 6. The name, as two columns with highlighted facts. */}
+      {/* 6. Why Lydit: the technology, as two columns with highlighted facts. */}
       <section className="chapter story" data-ink="#141414" data-ground="#ffffff" aria-labelledby="story-title">
         <h2 id="story-title" className="story__heading" data-reveal>
           Why Lydit
         </h2>
         <div className="story__text" data-reveal>
           <p>
-            <strong>Lydit</strong> takes its name from <mark className="hl hl--gold">lydite</mark>, the black stone of
-            ancient Lydia that assayers called the touchstone. Around 560 BCE, under{" "}
-            <mark className="hl hl--gold">Croesus</mark>, Lydia struck some of the first coins of pure gold, and the
-            stone was how a buyer told gold from a good imitation. The metal was drawn across the stone and its streak
-            laid beside streaks from <mark className="hl hl--gold">reference needles</mark> of known purity, so the
-            sample was never judged against itself.
+            <strong>Lydit</strong> works out Binance&apos;s one-way liquidation formula with{" "}
+            <mark className="hl hl--gold">exact decimal math</mark>, never rounded floating point, so every figure is
+            right to the cent before it is shown. It counts your{" "}
+            <mark className="hl hl--gold">other cross positions</mark>: their unrealized PnL and maintenance margin feed
+            into the formula the way Binance&apos;s own engine uses them. Every input travels{" "}
+            <mark className="hl hl--gold">in the link</mark>, so a shared link reopens the exact scenario, and every
+            result shows its working step by step.
           </p>
           <p>
-            Lydit works the same way. <mark className="hl hl--gold">Binance&apos;s published examples</mark> are the
-            needles. Every <mark className="hl hl--gold">update</mark> is drawn against them before it goes live, and
-            the needles are kept where the code cannot reach them.{" "}
+            The answers it is checked against are{" "}
+            <mark className="hl hl--gold">Binance&apos;s own worked examples</mark>, and they are kept out of the code
+            entirely, in an <mark className="hl hl--gold">outside test suite</mark>. An update can change the formula
+            but never the answers, so a wrong number fails the check instead of quietly passing. Every page then shows
+            which version is serving you and whether it passed.{" "}
             <Link href="/proof" className="hl hl--stone">
               A number that does not match never goes live.
             </Link>
           </p>
-        </div>
-      </section>
-
-      {/* 7. Gold, and gold-coloured. */}
-      <section className="chapter coins" data-ink="#141414" data-ground="#e3e5e0" aria-labelledby="coins-title">
-        <div className="grid">
-          <div className="coins__head">
-            <h2 id="coins-title" className="coins__heading" data-reveal>
-              Gold, and gold-coloured
-            </h2>
-            <p className="coins__text" data-reveal style={{ "--i": 1 } as React.CSSProperties}>
-              Two Lydian staters of solid gold, and a stater from Kyzikos with a gold skin over a base-metal core. On
-              sight they pass for one another; a reference tells them apart.
-            </p>
-          </div>
-          <dl className="coins__list">
-            <div data-reveal style={{ "--i": 1 } as React.CSSProperties}>
-              <dt>Gold stater</dt>
-              <dd>Lydia, ca. 560–546 BCE</dd>
-            </div>
-            <div data-reveal style={{ "--i": 2 } as React.CSSProperties}>
-              <dt>Gold stater</dt>
-              <dd>Lydia, ca. 560–546 BCE</dd>
-            </div>
-            <div data-reveal style={{ "--i": 3 } as React.CSSProperties}>
-              <dt>Fourrée stater</dt>
-              <dd>Kyzikos, ca. 600–500 BC: gold over base metal</dd>
-            </div>
-          </dl>
         </div>
       </section>
 

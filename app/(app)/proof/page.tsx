@@ -89,7 +89,7 @@ async function ProofScreen() {
                 <ArrowSquareOut size={15} aria-hidden />
               </a>
             ) : (
-              <Link href="/how-it-works" className="btn btn--secondary">
+              <Link href="/#how-it-works" className="btn btn--secondary">
                 How the gate works
               </Link>
             )}

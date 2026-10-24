@@ -9,7 +9,7 @@ export function AppBar() {
   return (
     <header className="appbar">
       <div className="appbar__in">
-        <Link href="/" className="brand" aria-label="Lydit, gauge">
+        <Link href="/" className="brand" aria-label="Lydit, home">
           <Mark />
           <span>Lydit</span>
         </Link>

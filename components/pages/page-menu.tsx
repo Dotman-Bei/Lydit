@@ -4,10 +4,10 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 
 const LINKS = [
-  { href: "/", label: "Gauge" },
+  { href: "/gauge", label: "Gauge" },
   { href: "/proof", label: "Proof" },
   { href: "/sources", label: "Sources" },
-  { href: "/how-it-works", label: "How it works" },
+  { href: "/#how-it-works", label: "How it works" },
 ];
 
 /** Phone only: one menu word that opens a full-screen sheet (layout.md §7). */

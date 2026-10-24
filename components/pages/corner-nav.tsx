@@ -9,12 +9,12 @@ import { PageMenu } from "./page-menu";
 export function CornerNav() {
   return (
     <header className="corner-nav">
-      <Link href="/" className="corner-nav__brand" aria-label="Lydit, gauge">
+      <Link href="/" className="corner-nav__brand" aria-label="Lydit, home">
         <Mark size={20} />
         <span>Lydit</span>
       </Link>
       <nav aria-label="Main" className="corner-nav__links">
-        <Link href="/how-it-works" className="corner-nav__link">
+        <Link href="/#how-it-works" className="corner-nav__link">
           How it works
         </Link>
         <Link href="/sources" className="corner-nav__link">
@@ -24,7 +24,7 @@ export function CornerNav() {
           <ProofLink />
         </Suspense>
       </nav>
-      <Link href="/" className="page-button">
+      <Link href="/gauge" className="page-button">
         Open the gauge
       </Link>
       <PageMenu />

@@ -4,10 +4,10 @@ import { getRepo } from "./build";
 // Unset links render as plain text rather than dead anchors.
 
 export const NAV = [
-  { href: "/", label: "Gauge" },
+  { href: "/gauge", label: "Gauge" },
   { href: "/proof", label: "Proof" },
   { href: "/sources", label: "Sources" },
-  { href: "/how-it-works", label: "How it works" },
+  { href: "/#how-it-works", label: "How it works" },
 ] as const;
 
 export function getLinks() {

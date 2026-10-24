@@ -15,9 +15,9 @@ export default function NotFound() {
       <CornerNav />
       <main>
         <TwoFieldHero id="not-found-title" lines={["No page", "here"]}>
-          <p>Nothing lives at this address. The gauge is at the root.</p>
+          <p>Nothing lives at this address. The gauge is one click away.</p>
           <p className="hero__actions">
-            <Link href="/" className="page-button" data-testid="go-calculator">
+            <Link href="/gauge" className="page-button" data-testid="go-calculator">
               Open the gauge
             </Link>
           </p>

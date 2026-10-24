@@ -15,7 +15,7 @@ export function PageFooter() {
       <div className="page-footer__row">
         <ul className="page-footer__places">
           <li>
-            <Link href="/">Open the gauge</Link>
+            <Link href="/gauge">Open the gauge</Link>
           </li>
           <li>
             <Link href="/proof">See the proof</Link>
