@@ -63,6 +63,7 @@ One-way mode, from Binance's FAQ:
 ```bash
 npm install
 npm run dev
+npm test   # formula properties, validation and link round trips; no expected prices
 ```
 
 Optional environment variables:
