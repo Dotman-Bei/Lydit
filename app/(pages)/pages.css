@@ -172,6 +172,7 @@
 }
 .hero__copy {
   display: block;
+  white-space: nowrap;
 }
 .hero__copy--paper {
   color: var(--ink);
@@ -182,6 +183,7 @@
   inset: 0;
   color: var(--streak);
   clip-path: inset(var(--cut) 0 0 0);
+  user-select: none; /* a decorative second copy: copying the headline yields it once */
 }
 .hero__sub {
   position: absolute;
@@ -1153,7 +1155,7 @@
     --seam: 46%;
   }
   .hero__title {
-    font-size: 13vw;
+    font-size: 11.5vw;
   }
   .hero__sub {
     font-size: var(--step-body);

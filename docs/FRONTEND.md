@@ -198,9 +198,9 @@ Phone: status first, build rows, then the suite as two-line rows (case on line 1
 Corner navigation: "Lydit" top-left; top-right "Sources", the proof line, and the action **Open the calculator**.
 
 1. **Hero, headline across two fields.** Paper above, stone below, meeting at half height. h1 in capitals:
-   "HELD TO / THE ANSWER", centred across the seam: ink on paper, gold where it crosses onto the stone. Supporting
-   sentence on the stone: "A Binance futures liquidation calculator. No release merges unless it reproduces Binance's
-   own worked examples."
+   "WRONG MATH / WON'T MERGE", centred across the seam: ink on paper, gold where it crosses onto the stone. Supporting
+   sentence on the stone: "A Binance futures liquidation calculator that counts your other cross positions. A release
+   ships only if it reproduces Binance's own worked examples."
 2. **Same account, two answers** (paper). Paragraph: "Binance's Example 2 is one cross wallet holding an ETH long and
    a BTC long. The BTC position's loss and margin eat into the shared balance, so the ETH long liquidates sooner. A
    calculator that reads one position at a time misses it." Two specimen figures, computed live: "ETH long, as Binance

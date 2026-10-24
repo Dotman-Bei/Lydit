@@ -61,10 +61,10 @@ export default function HowItWorksPage() {
   return (
     <main>
       {/* 1. Hero: headline across two fields. Paper above, stone below; the type turns gold on the stone. */}
-      <TwoFieldHero id="hero-title" lines={["Held to", "the answer"]}>
+      <TwoFieldHero id="hero-title" lines={["Wrong math", "won’t merge"]}>
         <p>
-          A Binance futures liquidation calculator. No release merges unless it reproduces Binance&apos;s own worked
-          examples.
+          A Binance futures liquidation calculator that counts your other cross positions. A release ships only if it
+          reproduces Binance&apos;s own worked examples.
         </p>
       </TwoFieldHero>
 
