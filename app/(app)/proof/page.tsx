@@ -133,7 +133,7 @@ async function ProofScreen() {
           </div>
           <p className="suite__note">
             The expected values live in the TestSprite suite, not in this repo, so no pull request can change them along
-            with the formula. Search the repo: no file holds an expected liquidation price.
+            with the formula. Search the code: no source, test or fixture file holds an expected liquidation price.
           </p>
           <table className="table suite">
             <thead>
