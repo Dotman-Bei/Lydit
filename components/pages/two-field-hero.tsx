@@ -4,10 +4,13 @@
 export function TwoFieldHero({
   id,
   lines,
+  long = false,
   children,
 }: {
   id: string;
   lines: [string, string];
+  /** A line longer than about ten characters: set smaller so both lines still fit the width. */
+  long?: boolean;
   children: React.ReactNode;
 }) {
   const copy = (
@@ -23,7 +26,7 @@ export function TwoFieldHero({
   );
   return (
     <section className="hero" data-ink="#141414" data-ground="#ffffff" aria-labelledby={id}>
-      <h1 id={id} className="hero__title">
+      <h1 id={id} className={`hero__title${long ? " hero__title--long" : ""}`}>
         <span className="hero__copy hero__copy--paper lines">{copy}</span>
         <span className="hero__copy hero__copy--stone lines" aria-hidden="true">
           {copy}

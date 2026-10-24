@@ -33,9 +33,9 @@ export function TwoAnswers() {
       <div className="specimens__text" data-reveal style={{ "--i": 1 } as React.CSSProperties}>
         <p>
           Binance&apos;s Example 2 is one cross wallet holding an ETH long and a BTC long. The BTC position&apos;s loss
-          and margin eat into the shared balance, so the ETH long liquidates sooner. A calculator that reads one
-          position at a time misses it. Both numbers below are computed live by this build; the rate and maintenance
-          amount stay at Example 2&apos;s values.
+          and margin eat into the shared balance, so the ETH long liquidates sooner. A tool that reads one position at a
+          time misses it. Both numbers below are computed live by this build; the rate and maintenance amount stay at
+          Example 2&apos;s values.
         </p>
         <div className="slider" data-ui>
           <label htmlFor="btc-mark" className="slider__label">
@@ -68,7 +68,7 @@ export function TwoAnswers() {
               Read alone, the ETH long shows <strong className="num">{formatFixed(shift.amount)} USDT</strong>{" "}
               {shift.closer ? "more" : "less"} room than the account has.{" "}
               <Link href={scenarioHref(withBtc)} className="text-link">
-                Open it in the calculator
+                Open it in the gauge
               </Link>
             </>
           ) : (

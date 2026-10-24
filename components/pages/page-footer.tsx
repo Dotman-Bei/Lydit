@@ -15,7 +15,7 @@ export function PageFooter() {
       <div className="page-footer__row">
         <ul className="page-footer__places">
           <li>
-            <Link href="/">Open the calculator</Link>
+            <Link href="/">Open the gauge</Link>
           </li>
           <li>
             <Link href="/proof">See the proof</Link>
@@ -43,17 +43,17 @@ export function PageFooter() {
             <li>
               {demoPrUrl ? (
                 <a href={demoPrUrl} target="_blank" rel="noreferrer">
-                  The demo pull request
+                  The caught mistake
                 </a>
               ) : (
-                <span>The demo pull request, linked once open</span>
+                <span>The caught mistake, linked once public</span>
               )}
             </li>
           </ul>
         </div>
       </div>
       <div className="page-footer__legal">
-        <p>A calculator, not advice. Binance&apos;s engine has the final word.</p>
+        <p>A gauge, not advice. Binance&apos;s engine has the final word.</p>
         <a href="#top">Back to top</a>
       </div>
     </footer>

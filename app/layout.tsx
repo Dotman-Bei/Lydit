@@ -9,7 +9,7 @@ const jost = Jost({ variable: "--font-jost", subsets: ["latin"], weight: ["400",
 export const metadata: Metadata = {
   title: { default: "Lydit: Binance liquidation price, held to Binance's answers", template: "%s | Lydit" },
   description:
-    "A Binance USDⓈ-M liquidation calculator. No release merges unless it reproduces Binance's own worked examples.",
+    "A Binance USDⓈ-M liquidation gauge. No wrong number goes live: every update must reproduce Binance's own worked examples.",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {

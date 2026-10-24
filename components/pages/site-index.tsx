@@ -13,7 +13,7 @@ export function SiteIndex() {
   const rows = [
     {
       href: "/",
-      title: "Calculator",
+      title: "Gauge",
       text: (
         <>
           Enter a position, read where it liquidates, copy the link. Binance&apos;s ETH example computes to{" "}
@@ -21,7 +21,7 @@ export function SiteIndex() {
         </>
       ),
     },
-    { href: "/how-it-works", title: "How it works", text: "Why a pull request cannot grade itself." },
+    { href: "/how-it-works", title: "How it works", text: "Why an update cannot grade itself." },
     { href: "/sources", title: "Sources", text: "Every formula and term, and the scenario link format." },
     { href: "/proof", title: "Proof", text: "The commit serving you, and whether it passed." },
   ];

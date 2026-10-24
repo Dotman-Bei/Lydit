@@ -28,7 +28,7 @@ function CalculatorLoading() {
     <div aria-busy="true">
       <header className="title-row">
         <div>
-          <h1 className="title">Liquidation calculator</h1>
+          <h1 className="title">Liquidation gauge</h1>
           <p className="subline">Binance USDⓈ-M, one-way mode. Computed at full precision, shown to 2 decimals.</p>
         </div>
       </header>

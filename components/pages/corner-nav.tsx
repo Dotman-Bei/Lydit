@@ -9,7 +9,7 @@ import { PageMenu } from "./page-menu";
 export function CornerNav() {
   return (
     <header className="corner-nav">
-      <Link href="/" className="corner-nav__brand" aria-label="Lydit, calculator">
+      <Link href="/" className="corner-nav__brand" aria-label="Lydit, gauge">
         <Mark size={20} />
         <span>Lydit</span>
       </Link>
@@ -25,7 +25,7 @@ export function CornerNav() {
         </Suspense>
       </nav>
       <Link href="/" className="page-button">
-        Open the calculator
+        Open the gauge
       </Link>
       <PageMenu />
     </header>

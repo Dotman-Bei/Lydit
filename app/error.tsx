@@ -12,20 +12,20 @@ export default function ErrorPage({ retry }: { error: unknown; retry: () => void
   return (
     <div className="page">
       <header className="corner-nav">
-        <Link href="/" className="corner-nav__brand" aria-label="Lydit, calculator">
+        <Link href="/" className="corner-nav__brand" aria-label="Lydit, gauge">
           <Mark size={20} />
           <span>Lydit</span>
         </Link>
       </header>
       <main>
         <TwoFieldHero id="error-title" lines={["This page", "broke"]}>
-          <p>Lydit shows nothing rather than a wrong number. Try again, or start over from the calculator.</p>
+          <p>Lydit shows nothing rather than a wrong number. Try again, or start over from the gauge.</p>
           <p className="hero__actions">
             <button type="button" className="page-button" onClick={() => retry()}>
               Try again
             </button>
             <Link href="/" className="hero__link" data-testid="go-calculator">
-              Open the calculator
+              Open the gauge
             </Link>
           </p>
         </TwoFieldHero>

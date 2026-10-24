@@ -40,7 +40,7 @@ export function Calculator({ initial }: { initial: Scenario }) {
     <>
       <header className="title-row">
         <div>
-          <h1 className="title">Liquidation calculator</h1>
+          <h1 className="title">Liquidation gauge</h1>
           <p className="subline" data-testid="finding">
             {finding}
           </p>

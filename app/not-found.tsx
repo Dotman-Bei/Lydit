@@ -15,10 +15,10 @@ export default function NotFound() {
       <CornerNav />
       <main>
         <TwoFieldHero id="not-found-title" lines={["No page", "here"]}>
-          <p>Nothing lives at this address. The calculator is at the root.</p>
+          <p>Nothing lives at this address. The gauge is at the root.</p>
           <p className="hero__actions">
             <Link href="/" className="page-button" data-testid="go-calculator">
-              Open the calculator
+              Open the gauge
             </Link>
           </p>
         </TwoFieldHero>

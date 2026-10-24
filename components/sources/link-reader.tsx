@@ -62,7 +62,7 @@ export function LinkReader({ example }: { example: string }) {
         onChange={(e) => setText(e.target.value)}
       />
       {rows.length === 0 ? (
-        <p className="reader__empty">This link carries no parameters, so the calculator would open empty.</p>
+        <p className="reader__empty">This link carries no parameters, so the gauge would open empty.</p>
       ) : (
         <table className="reader__table">
           <thead>
@@ -90,7 +90,7 @@ export function LinkReader({ example }: { example: string }) {
           {rows.length} parameter{rows.length === 1 ? "" : "s"}
         </span>
         <Link href={href} className="reader__open">
-          Open it in the calculator
+          Open it in the gauge
         </Link>
       </div>
     </div>

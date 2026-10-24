@@ -198,9 +198,9 @@ Phone: status first, build rows, then the suite as two-line rows (case on line 1
 Corner navigation: "Lydit" top-left; top-right "Sources", the proof line, and the action **Open the calculator**.
 
 1. **Hero, headline across two fields.** Paper above, stone below, meeting at half height. h1 in capitals:
-   "WRONG MATH / WON'T MERGE", centred across the seam: ink on paper, gold where it crosses onto the stone. Supporting
-   sentence on the stone: "A Binance futures liquidation calculator that counts your other cross positions. A release
-   ships only if it reproduces Binance's own worked examples."
+   "NO WRONG / NUMBER GOES LIVE", centred across the seam: ink on paper, gold where it crosses onto the stone. Supporting
+   sentence on the stone: "A Binance futures liquidation gauge that counts your other cross positions. An update
+   goes live only if it reproduces Binance's own worked examples."
 2. **Same account, two answers** (paper). Paragraph: "Binance's Example 2 is one cross wallet holding an ETH long and
    a BTC long. The BTC position's loss and margin eat into the shared balance, so the ETH long liquidates sooner. A
    calculator that reads one position at a time misses it." Two specimen figures, computed live: "ETH long, as Binance
@@ -297,3 +297,11 @@ the right (the calculator row quotes Binance's ETH example as this build compute
   from the engine at render time.
 - Photographs, archival pictures and illustrations: the site carries none, by the owner's decision. Its visuals are
   type, colour fields and real interface fragments computed by the engine.
+
+## 6. Wording (owner's decision, after review)
+
+- The tool is a **gauge**, never a calculator: nav "Gauge", screen title "Liquidation gauge", button "Open the gauge".
+  Code names and test ids keep `calculator` (`go-calculator`, `Calculator`), since the suite targets them.
+- Trader-facing copy uses plain words: update, goes live. "Pull request" and "merge" appear only where the mechanism
+  is explained (the step-by-step section on `/how-it-works`, `/proof`, and the PR number in the build status).
+- The how-it-works hero sets "NUMBER GOES LIVE" smaller (8.4vw) so the long line stays on two lines.

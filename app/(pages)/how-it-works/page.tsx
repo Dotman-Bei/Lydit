@@ -14,7 +14,7 @@ import { getLinks } from "@/lib/site";
 export const metadata: Metadata = {
   title: "How it works",
   description:
-    "Every pull request preview must reproduce Binance's published answers, and those answers live outside the repo.",
+    "Every update must reproduce Binance's published answers before it goes live, and those answers are kept out of the code's reach.",
 };
 
 // Both fragments in the call-and-response are this build's own answers, computed at render.
@@ -48,11 +48,11 @@ export default function HowItWorksPage() {
     { what: "Binance’s FAQ", where: "binance.com", see: "Example 2’s numbers", href: BINANCE_FAQ_URL, external: true },
     {
       what: "The ETH scenario",
-      where: "this calculator",
+      where: "this gauge",
       see: "the same inputs",
       href: scenarioHref(getPreset("eth-cross").scenario),
     },
-    { what: "The demo PR", where: "GitHub", see: "red, then green", href: demoPrUrl, external: true },
+    { what: "The caught mistake", where: "GitHub", see: "red, then green", href: demoPrUrl, external: true },
     { what: "The golden suite", where: "TestSprite", see: "the expected values", href: suiteUrl, external: true },
     { what: "The source", where: "GitHub", see: "no expected prices", href: repoUrl, external: true },
     { what: "This build’s check", where: "Lydit", see: "the commit’s result", href: "/proof" },
@@ -61,9 +61,9 @@ export default function HowItWorksPage() {
   return (
     <main>
       {/* 1. Hero: headline across two fields. Paper above, stone below; the type turns gold on the stone. */}
-      <TwoFieldHero id="hero-title" lines={["Wrong math", "won’t merge"]}>
+      <TwoFieldHero id="hero-title" lines={["No wrong", "number goes live"]} long>
         <p>
-          A Binance futures liquidation calculator that counts your other cross positions. A release ships only if it
+          A Binance futures liquidation gauge that counts your other cross positions. An update goes live only if it
           reproduces Binance&apos;s own worked examples.
         </p>
       </TwoFieldHero>
@@ -125,7 +125,7 @@ export default function HowItWorksPage() {
       <section className="chapter statement" data-ink="#141414" data-ground="#c9a54a" aria-labelledby="held-out">
         <div className="statement__text">
           <h2 id="held-out" className="statement__head">
-            Held out of every pull request:
+            Kept out of the code’s reach:
           </h2>{" "}
           <HeldOut />
         </div>
@@ -186,11 +186,10 @@ export default function HowItWorksPage() {
           </p>
           <p>
             Lydit works the same way. <mark className="hl hl--gold">Binance&apos;s published examples</mark> are the
-            needles. Every release is drawn against them on its{" "}
-            <mark className="hl hl--gold">pull request preview</mark>, and the needles sit where the pull request cannot
-            reach.{" "}
+            needles. Every <mark className="hl hl--gold">update</mark> is drawn against them before it goes live, and
+            the needles are kept where the code cannot reach them.{" "}
             <Link href="/proof" className="hl hl--stone">
-              A number that does not match does not merge.
+              A number that does not match never goes live.
             </Link>
           </p>
         </div>
