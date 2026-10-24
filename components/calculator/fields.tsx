@@ -33,6 +33,8 @@ export function Field({ name, label, help, error, value, unit, testId, onChange 
           spellCheck={false}
           value={value}
           onChange={(e) => onChange(e.target.value)}
+          // A browser tool can set the value without an input event; leaving the field still counts as the edit.
+          onBlur={(e) => e.target.value !== value && onChange(e.target.value)}
           aria-invalid={error ? true : undefined}
           aria-describedby={describedBy}
           data-testid={testId}
