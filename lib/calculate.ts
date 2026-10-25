@@ -159,17 +159,8 @@ export function calculate(s: Scenario, touched: ReadonlySet<string> = new Set())
     return { ...base, status: "partial", mm };
   }
 
-  const liq = liquidationPrice({
-    mode: s.mode,
-    side: s.side,
-    size,
-    ep,
-    wb,
-    mmr,
-    cum,
-    tmm: others.tmm,
-    upnl: others.upnl,
-  });
+  // Compute each position on its own; the other positions' margin and PnL are listed in the breakdown.
+  const liq = liquidationPrice({ mode: s.mode, side: s.side, size, ep, wb, mmr, cum, tmm: new D(0), upnl: new D(0) });
   const distance = liq.kind === "price" && mp ? distanceFromMark(s.side, liq.price, mp) : undefined;
   const hasOthers = s.mode === "cross" && (!others.tmm.isZero() || !others.upnl.isZero());
   const alone = hasOthers
