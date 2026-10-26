@@ -162,11 +162,7 @@ export function calculate(s: Scenario, touched: ReadonlySet<string> = new Set())
   // Compute each position on its own; the other positions' margin and PnL are listed in the breakdown.
   const liq = liquidationPrice({ mode: s.mode, side: s.side, size, ep, wb, mmr, cum, tmm: new D(0), upnl: new D(0) });
   const distance = liq.kind === "price" && mp ? distanceFromMark(s.side, liq.price, mp) : undefined;
-  const hasOthers = s.mode === "cross" && (!others.tmm.isZero() || !others.upnl.isZero());
-  const alone = hasOthers
-    ? liquidationPrice({ mode: s.mode, side: s.side, size, ep, wb, mmr, cum, tmm: new D(0), upnl: new D(0) })
-    : undefined;
-  return { ...base, status: "ready", mm, liq, alone, distance };
+  return { ...base, status: "ready", mm, liq, distance };
 }
 
 /**
