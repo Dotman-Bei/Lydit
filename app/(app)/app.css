@@ -71,19 +71,14 @@
   height: 32px;
   padding: 0 10px;
   border-radius: 6px;
+  color: var(--text);
   font-size: 13px;
+  font-weight: 500;
   text-decoration: none;
   transition: background-color var(--t-hover) ease;
 }
 .proof-chip:hover {
   background: var(--card);
-}
-.proof-chip__sha {
-  color: var(--text);
-  font-weight: 500;
-}
-.proof-chip__env {
-  color: var(--faint);
 }
 .status-glyph.is-passed,
 .is-passed {
@@ -96,9 +91,6 @@
 .status-glyph.is-neutral,
 .is-neutral {
   color: var(--faint);
-}
-.proof-chip__status {
-  font-weight: 500;
 }
 .appbar__menu {
   display: none;
@@ -974,12 +966,6 @@
   .appbar__menu {
     display: inline-flex;
   }
-  .proof-chip__env {
-    display: none;
-  }
-}
-.proof-chip__short {
-  display: none;
 }
 @media (max-width: 639px) {
   .suite thead {
@@ -1041,13 +1027,6 @@
   }
   .appbar__in {
     width: calc(100% - 16px);
-  }
-  .proof-chip__sha,
-  .proof-chip__long {
-    display: none;
-  }
-  .proof-chip__short {
-    display: inline;
   }
   .title-row__actions,
   .examples {

@@ -20,7 +20,8 @@ export function AppNavLinks() {
   const pathname = usePathname();
   return (
     <ul className="appbar__links">
-      {NAV.map((item) => (
+      {/* Proof has its own badge at the right of the bar. */}
+      {NAV.filter((item) => item.href !== "/proof").map((item) => (
         <li key={item.href}>
           <Link
             href={item.href}
