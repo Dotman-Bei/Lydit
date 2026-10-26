@@ -159,10 +159,24 @@ export function calculate(s: Scenario, touched: ReadonlySet<string> = new Set())
     return { ...base, status: "partial", mm };
   }
 
-  // Compute each position on its own; the other positions' margin and PnL are listed in the breakdown.
-  const liq = liquidationPrice({ mode: s.mode, side: s.side, size, ep, wb, mmr, cum, tmm: new D(0), upnl: new D(0) });
+  // Cross positions share one balance, so the other positions' margin and PnL belong in the formula (TMM1, UPNL1).
+  const liq = liquidationPrice({
+    mode: s.mode,
+    side: s.side,
+    size,
+    ep,
+    wb,
+    mmr,
+    cum,
+    tmm: others.tmm,
+    upnl: others.upnl,
+  });
   const distance = liq.kind === "price" && mp ? distanceFromMark(s.side, liq.price, mp) : undefined;
-  return { ...base, status: "ready", mm, liq, distance };
+  const hasOthers = s.mode === "cross" && (!others.tmm.isZero() || !others.upnl.isZero());
+  const alone = hasOthers
+    ? liquidationPrice({ mode: s.mode, side: s.side, size, ep, wb, mmr, cum, tmm: new D(0), upnl: new D(0) })
+    : undefined;
+  return { ...base, status: "ready", mm, liq, alone, distance };
 }
 
 /**
