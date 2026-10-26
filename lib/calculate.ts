@@ -159,6 +159,7 @@ export function calculate(s: Scenario, touched: ReadonlySet<string> = new Set())
     return { ...base, status: "partial", mm };
   }
 
+  // Cross positions share one balance, so the other positions' margin and PnL belong in the formula (TMM1, UPNL1).
   const liq = liquidationPrice({
     mode: s.mode,
     side: s.side,
