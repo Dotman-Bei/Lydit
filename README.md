@@ -12,8 +12,8 @@ The "Open in Lydit" links compute the answer live from the inputs in the link; n
 
 - Live app: https://lydit.vercel.app
 - Proof for the commit being served: https://lydit.vercel.app/proof
-- The caught mistake (red, then green): _linked here once the demo pull request merges_
-- The TestSprite suite: _linked here once it is shared_
+- The caught mistake (red, then green): https://github.com/Dotman-Bei/Lydit/pull/2
+- The TestSprite run that passed the fix: https://www.testsprite.com/dashboard-v3/o/07da3028-9fb4-598c-bdf5-eea8b5e5f08b/projects/344af462-3655-49c8-847a-5ca8922987b1/execution/c757267f-ea18-4e5e-a238-6afc30add5c2
 
 > No test file, fixture or source file in this repo holds an expected liquidation price; the answer key lives in the TestSprite suite, outside any PR.
 
@@ -44,6 +44,8 @@ The portal's own generated tests (sources, navigation, validation) run alongside
 2. The TestSprite GitHub App waits for that preview, runs the suite against it, posts a comment and a `TestSprite` check on the pull request.
 3. "Block PR until tests pass" is on, and `main` requires the check, so a red check cannot merge.
 4. Production deploys from `main`. Every page shows the commit it serves, and `/proof` reads that commit's TestSprite check from GitHub (`/api/proof`, cached for 60 seconds). It never shows "passed" unless GitHub says so.
+
+The trigger listens for Vercel's status on commits of an open pull request. Vercel builds in under a minute, so a pull request opened after its first preview finished gets no run until its next push.
 
 ## The holdout rule
 
