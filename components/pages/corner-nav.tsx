@@ -34,13 +34,26 @@ export function CornerNav() {
 
 async function ProofLink() {
   const { build, proof } = await loadProof();
+  const label = build.shortSha ? `Commit ${build.shortSha}: ${STATUS_SHORT[proof.status]}` : "Local build";
   return (
-    <Link href="/proof" className="corner-nav__link corner-nav__proof" data-testid="proof-line">
+    // One word in the nav; the commit and its result stay available to screen readers and on hover.
+    <Link
+      href="/proof"
+      className="corner-nav__link corner-nav__proof"
+      data-testid="proof-line"
+      title={label}
+    >
       <StatusGlyph status={proof.status} size={15} />
-      <span data-testid="proof-sha" className="num">
-        {build.shortSha ?? "Local build"}
+      Proof
+      <span className="sr-only">
+        : <span data-testid="proof-sha">{build.shortSha ?? "Local build"}</span>
+        {build.shortSha && (
+          <>
+            {" "}
+            <span data-testid="proof-status">{STATUS_SHORT[proof.status]}</span>
+          </>
+        )}
       </span>
-      {build.shortSha && <span data-testid="proof-status">{STATUS_SHORT[proof.status]}</span>}
     </Link>
   );
 }
