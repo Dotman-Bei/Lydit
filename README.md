@@ -17,12 +17,15 @@
 
 ## For judges: two minutes
 
+Keep [Binance's FAQ][faq] open next to the gauge: its Example 2 is the reference every number below is held to.
+
 1. Open [/gauge](https://lydit.vercel.app/gauge) and click **ETH long**. The liquidation price is **1,153.26**, the number Binance publishes for those inputs. "How this number is built" shows every term.
 2. **Break it yourself.** Click **Remove** on the BTC position: the price drops to **1,114.78**, the mistake TestSprite caught in [PR #2](https://github.com/Dotman-Bei/Lydit/pull/2). Click **ETH long** again for 1,153.26.
 3. **Test the logic.** Set the wallet balance to `2000000`: a long's price moves down, to **1,013.14**. Switch to **Isolated**: the BTC position stops counting, the page says so, and the price is 1,114.78. Switch to **Short**: the price jumps above entry, to **1,705.23**.
 4. **Try bad input.** Type `120` in Maintenance rate or `-1` in Size: an error appears under the field and no number is shown until it is fixed.
 5. **Share it.** Click **Copy link** and open it in a new tab: the same inputs and the same answer come back.
-6. Open [/proof](https://lydit.vercel.app/proof): the commit serving the site, its `TestSprite V3` result, and the 16 golden cases with their Binance sources.
+6. **Move the other position.** On the [landing page](https://lydit.vercel.app), drag the BTC mark in "Same account, two answers": as BTC falls, its loss eats the shared balance and the ETH price moves closer.
+7. **Check the build you are using.** The chip at the top right shows the commit and its result. [/proof](https://lydit.vercel.app/proof) lists the 16 golden cases with their Binance sources, and **Open the check** goes to that commit's TestSprite run. Then search the code: no source, test or fixture file holds an expected liquidation price.
 
 **Red on purpose.** [PR #2](https://github.com/Dotman-Bei/Lydit/pull/2) is a coding-agent refactor titled "compute liquidation per position". It sets the other cross positions' margin and PnL to zero, and all 19 in-repo tests still pass. On the PR's Vercel preview, TestSprite saw ETH at **1,114.78** instead of 1,153.26 and BTC at **18,778.73** instead of 26,316.89: 16 of 35 tests failed, the required check went red and GitHub blocked the merge. The fix commit restored the terms, the check went green and the PR merged. Auto-heal did not rewrite the expected numbers to fit the wrong build.
 
