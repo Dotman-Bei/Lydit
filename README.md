@@ -45,6 +45,8 @@ The portal's own generated tests (sources, navigation, validation) run alongside
 3. "Block PR until tests pass" is on, and `main` requires the check, so a red check cannot merge.
 4. Production deploys from `main`. Every page shows the commit it serves, and `/proof` reads that commit's TestSprite check from GitHub (`/api/proof`, cached for 60 seconds). It never shows "passed" unless GitHub says so.
 
+The trigger listens for Vercel's status on commits of an open pull request. Vercel builds in under a minute, so a pull request opened after its first preview finished gets no run until its next push.
+
 ## The holdout rule
 
 The expected numbers live only in the TestSprite suite. The repo holds the formula, Binance's inputs (as presets and links) and nothing else, so a coding agent that changes the formula cannot change the answer key in the same pull request. A wrong number fails the check instead of quietly passing.
