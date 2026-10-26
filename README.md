@@ -12,8 +12,8 @@ The "Open in Lydit" links compute the answer live from the inputs in the link; n
 
 - Live app: https://lydit.vercel.app
 - Proof for the commit being served: https://lydit.vercel.app/proof
-- The caught mistake (red, then green): _linked here once the demo pull request merges_
-- The TestSprite suite: _linked here once it is shared_
+- The caught mistake (red, then green): https://github.com/Dotman-Bei/Lydit/pull/2
+- The TestSprite run that passed the fix: https://www.testsprite.com/dashboard-v3/o/07da3028-9fb4-598c-bdf5-eea8b5e5f08b/projects/344af462-3655-49c8-847a-5ca8922987b1/execution/c757267f-ea18-4e5e-a238-6afc30add5c2
 
 > No test file, fixture or source file in this repo holds an expected liquidation price; the answer key lives in the TestSprite suite, outside any PR.
 
